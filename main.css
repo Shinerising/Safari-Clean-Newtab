@@ -1,0 +1,242 @@
+body {
+    margin: 0;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+#cover {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#main {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+#searchBar {
+    width: 40em;
+    height: 4em;
+    margin: 12em auto;
+    position: relative;
+    border: 1px solid rgba(100, 100, 100, .1);
+    border-radius: .5em;
+    background: rgba(243, 250, 244, .95);
+    box-shadow: 0em 2em 5em rgba(100, 100, 100, .3);
+    opacity: .6;
+    transition: 0.5s opacity, 0.5s background;
+}
+
+#searchBar:hover {
+    opacity: 1;
+    background: rgba(240, 250, 254, .95);
+    border: 1px solid rgba(100, 100, 100, .4);
+    box-shadow: 0em 2em 5em rgba(100, 100, 100, .6);
+}
+
+.searchBarFocused {
+    opacity: 1 !important;
+    box-shadow: 0em 2em 5em rgba(100, 100, 100, .6) !important;
+}
+
+#textInputIcon {
+    position: absolute;
+    width: 0;
+    top: 0.5em;
+    left: 0.5em;
+    font-size: 2em;
+    line-height: 1em;
+    font-family: Roboto;
+    color: gray;
+}
+
+#textInput {
+    position: absolute;
+    border: none;
+    top: 0.3em;
+    left: 2em;
+    width: 18em;
+    font-size: 2em;
+    line-height: 1em;
+    padding: 0em;
+    font-family: Roboto;
+    background: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#textInput:focus {
+    outline: none;
+}
+
+#textInputPrewords {
+    position: absolute;
+    width: 18em;
+    top: 0.5em;
+    left: 2em;
+    font-size: 2em;
+    line-height: 1em;
+    font-family: Roboto;
+    color: gray;
+}
+
+#bottomBar {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 8em;
+    -webkit-animation: flyBottom .7s .5s both;
+}
+
+#blurShadow {
+    background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(0, 0, 0, .2)));
+    position: absolute;
+    left: 0;
+    top: -2em;
+    width: 100%;
+    height: 2em;
+    border-bottom: 1px solid rgba(100, 100, 100, .8);
+}
+
+#blurMask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(250, 250, 250, .5);
+    z-index: 10;
+}
+
+#blurImage {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    -webkit-filter: blur(10px);
+}
+
+#blurImage img {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#sites {
+    margin: -8em auto;
+    width: 95%;
+    height: 8em;
+    position: relative;
+    overflow: hidden;
+    -webkit-animation: flyBottom .5s .7s both;
+}
+
+.siteButton {
+    margin-top: 1em;
+    display: inline-block;
+    width: 12.1%;
+    text-align: center;
+}
+
+.siteButton:active {
+    -webkit-filter: brightness(.8);
+}
+
+.siteIcon {
+    width: 5em;
+    height: 5em;
+    box-shadow: 0px 3px 5px rgba(100, 100, 100, .2);
+    border-radius: 1em;
+    display: inline-block;
+}
+
+.siteIcon:hover {
+    box-shadow: 0px 3px 8px rgba(100, 100, 100, .8);
+}
+
+.siteTitle {
+    font-family: Futura;
+    color: white;
+    text-shadow: 0px 1px 5px black;
+}
+
+#infoText {
+    position: absolute;
+    right: 1em;
+    top: -7em;
+    height: 6em;
+    text-align: center;
+    font-family: futura;
+    color: white;
+    font-size: 0.8em;
+    -webkit-transform: rotate(5deg);
+    text-shadow: 0px 1px 5px black;
+    cursor: pointer;
+    display: none;
+    transition: font-size 0.1s, -webkit-transform 0.5s;
+    -webkit-animation: flyTop .5s 2s both;
+}
+
+#infoText:hover {
+    -webkit-transform: rotate(0deg);
+    font-size: 1em;
+}
+
+#infoText:active {
+    top: -6.5em;
+}
+
+#imageBox .coverImage {
+    height: 4em;
+    border: solid white 0.5em;
+    box-shadow: 2px 2px 5px rgba(100, 100, 100, .6);
+}
+
+.click {
+    -webkit-animation: shock 0.2s;
+}
+
+@-webkit-keyframes shock {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    25% {
+        -webkit-transform: rotate(-20deg);
+    }
+    75% {
+        -webkit-transform: rotate(40deg);
+    }
+    100% {
+        -webkit-transform: rotate(0deg);
+    }
+}
+
+@-webkit-keyframes flyBottom {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes flyTop {
+    from {
+        opacity: 0;
+        top: -10em;
+    }
+    to {
+        opacity: 1;
+        top: -8em;
+    }
+}
