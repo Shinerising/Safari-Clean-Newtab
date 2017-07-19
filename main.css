@@ -16,6 +16,15 @@ a {
     width: 100%;
 }
 
+.coverImage {
+    object-fit: cover;
+}
+
+#cover > .coverImage {
+    width: 100%;
+    height: 100%;
+}
+
 #main {
     position: absolute;
     width: 100%;
@@ -30,24 +39,23 @@ a {
     height: 4em;
     margin: 15em auto;
     position: relative;
-    border: 1px solid rgba(100, 100, 100, .1);
     border-radius: .5em;
-    background: rgba(243, 250, 244, .95);
+    background: rgba(240, 250, 254, .5);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
     box-shadow: 0em 2em 5em rgba(100, 100, 100, .3);
-    opacity: .6;
+    opacity: .8;
     transition: 0.5s opacity, 0.5s background;
 }
 
 #searchBar:hover {
     opacity: 1;
-    background: rgba(240, 250, 254, .95);
-    border: 1px solid rgba(100, 100, 100, .4);
+    background: rgba(240, 250, 254, .8);
     box-shadow: 0em 2em 5em rgba(100, 100, 100, .6);
 }
 
-.searchBarFocused {
-    opacity: 1 !important;
-    box-shadow: 0em 2em 5em rgba(100, 100, 100, .6) !important;
+#searchBar.searchBarFocused {
+    opacity: 1;
+    box-shadow: 0em 2em 5em rgba(100, 100, 100, .6);
 }
 
 #textInputIcon {
@@ -56,7 +64,7 @@ a {
     top: 0.5em;
     left: 0.5em;
     font-size: 2em;
-    line-height: 1em;
+    line-height: 1.2em;
     font-family: Roboto;
     color: gray;
 }
@@ -68,7 +76,7 @@ a {
     left: 2em;
     width: 18em;
     font-size: 2em;
-    line-height: 1em;
+    line-height: 1.3em;
     padding: 0em;
     font-family: Roboto;
     background: transparent;
@@ -95,79 +103,59 @@ a {
     position: absolute;
     width: 100%;
     bottom: 0;
-    height: 8em;
+    height: 8.5em;
+    background: rgba(255,255,255,.5);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
     -webkit-animation: flyBottom .7s .5s both;
 }
 
-#blurShadow {
-    background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(0, 0, 0, .2)));
+#bottomBar:before {
+    content: '';
     position: absolute;
-    left: 0;
-    top: -2em;
     width: 100%;
+    top: -2rem;
     height: 2em;
-    border-bottom: 1px solid rgba(100, 100, 100, .8);
-}
-
-#blurMask {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(250, 250, 250, .5);
-    z-index: 10;
-}
-
-#blurImage {
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    -webkit-filter: blur(10px);
-}
-
-#blurImage img {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+    background-image: linear-gradient(to bottom,rgba(0,0,0,0),rgba(0,0,0,.1));
 }
 
 #sites {
-    margin: -8em auto;
-    width: 95%;
-    height: 8em;
+    padding: 0 2%;
+    height: 8.5em;
+    display: flex;
     position: relative;
     overflow: hidden;
     -webkit-animation: flyBottom .5s .7s both;
 }
 
-.siteButton {
-    margin-top: 1em;
-    display: inline-block;
-    width: 12.1%;
-    text-align: center;
+#sites > div {
+    flex-grow: 1;
 }
 
-.siteButton:active {
-    -webkit-filter: brightness(.8);
+.siteButton {
+    margin-top: 1.5em;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    transition: -webkit-filter .3s;
+}
+
+.siteButton:hover {
+    -webkit-filter: brightness(.6);
 }
 
 .siteIcon {
-    width: 5em;
-    height: 5em;
-    box-shadow: 0px 3px 5px rgba(100, 100, 100, .2);
+    width: 4.8em;
+    height: 4.8em;
     border-radius: 1em;
     display: inline-block;
 }
 
-.siteIcon:hover {
-    box-shadow: 0px 3px 8px rgba(100, 100, 100, .8);
-}
-
 .siteTitle {
-    font-family: Futura;
-    color: white;
-    text-shadow: 0px 1px 5px black;
+    font-family: SF UI Display;
+    font-size: .9em;
+    line-height: 2em;
+    letter-spacing: .03em;
+    color: #333;
 }
 
 #infoText {
@@ -176,9 +164,11 @@ a {
     top: -7em;
     height: 6em;
     text-align: center;
-    font-family: futura;
+    font-family: SF UI Display;
     color: white;
     font-size: 0.8em;
+    line-height: 2em;
+    font-weight: bold;
     -webkit-transform: rotate(5deg);
     text-shadow: 0px 1px 5px black;
     cursor: pointer;

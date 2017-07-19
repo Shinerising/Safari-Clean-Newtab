@@ -1,224 +1,189 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>My Safari</title>
-    <meta name="description" content="An interactive getting started guide for Brackets.">
-    <link rel="stylesheet" href="main.css">
-    <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
-    <script type="text/javascript">
-        var nInterId, focusTick = 0;
-        var isGoogleEnabled = true;
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>My Safari</title>
+	<link rel="stylesheet" href="main.css">
+	<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+	<script type="text/javascript">
+		var nInterId, focusTick = 0;
+		var isGoogleEnabled = true;
 
-        $(document).ready(function () {
-            showImage("background.jpg");
-            var lastImageURL, lastTimeSpot, lastFileURL;
-            if (localStorage.getItem("lastTimeSpot") != null) {
-                lastImageURL = localStorage.getItem("coverImageURL");
-                lastTimeSpot = localStorage.getItem("lastTimeSpot");
-                lastFileURL = localStorage.getItem("imageFileURL");
-                showImage(lastImageURL, lastFileURL);
-                var currentTimeSpot = $.now();
-                if (currentTimeSpot - lastTimeSpot > 3600000) loadNewImage();
-            } else {
-                loadNewImage();
-            }
+		$(document).ready(function () {
+			showImage("background.jpg");
+			var lastImageURL, lastTimeSpot, lastFileURL;
+			if (localStorage.getItem("lastTimeSpot") != null) {
+				lastImageURL = localStorage.getItem("coverImageURL");
+				lastTimeSpot = localStorage.getItem("lastTimeSpot");
+				lastFileURL = localStorage.getItem("imageFileURL");
+				// showImage(lastImageURL, lastFileURL);
+				var currentTimeSpot = $.now();
+				if (currentTimeSpot - lastTimeSpot > 3600000) loadNewImage();
+			} else {
+				// loadNewImage();
+			}
 
-            $("#textInput").bind("keypress", {}, enterSearch);
+			$("#textInput").bind("keypress", {}, enterSearch);
 
-            $("#textInput").focus();
-            $(".siteButton").click(function () {
-                $(".siteButton").removeClass("click");
-                $(this).addClass("click");
-            });
+			$("#textInput").focus();
+			$(".siteButton").click(function () {
+				$(".siteButton").removeClass("click");
+				$(this).addClass("click");
+			});
 
-            var testURL = "https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=test";
-            $.ajax({
-                url: testURL,
-                dataType: "jsonp",
-                timeout: 3000,
-                cache: false,
-                success: function () {
-                    isGoogleEnabled = true;
-                },
-                error: function () {
-                    isGoogleEnabled = false;
-                }
-            });
-        });
+		});
 
-        function loadNewImage() {
-            var jsonURL = "http://konachan.com/post.json?limit=1&tags=hatsune_miku";
-            $.ajax({
-                url: jsonURL,
-                dataType: "json",
-                success: function (data) {
-                    if (data[0]["rating"] != "s") return;
-                    var imageURL = data[0]["sample_url"].toString();
-                    var imageFileURL = data[0]["file_url"].toString();
-                    showImage(imageURL, imageFileURL);
-                    var currentTimeSpot = $.now();
-                    localStorage.setItem("coverImageURL", imageURL);
-                    localStorage.setItem("lastTimeSpot", currentTimeSpot);
-                    localStorage.setItem("imageFileURL", imageFileURL);
-                },
-                error: function () {
-                    var imageURL = "background.jpg";
-                    var imageFileURL = "background.jpg";
+		function loadNewImage() {
+			var jsonURL = "https://konachan.com/post.json?limit=1&tags=hatsune_miku";
+			$.ajax({
+				url: jsonURL,
+				dataType: "json",
+				success: function (data) {
+					if (data[0]["rating"] != "s") return;
+					var imageURL = 'http:' + data[0]["sample_url"].toString();
+					var imageFileURL = 'http:' + data[0]["file_url"].toString();
+					showImage(imageURL, imageFileURL);
+					var currentTimeSpot = $.now();
+					localStorage.setItem("coverImageURL", imageURL);
+					localStorage.setItem("lastTimeSpot", currentTimeSpot);
+					localStorage.setItem("imageFileURL", imageFileURL);
+				},
+				error: function () {
+					var imageURL = "background.jpg";
+					var imageFileURL = "background.jpg";
 
-                    showImage(imageURL);
-                    var currentTimeSpot = $.now();
-                    localStorage.setItem("coverImageURL", imageURL);
-                    localStorage.setItem("lastTimeSpot", currentTimeSpot);
-                    localStorage.setItem("imageFileURL", imageFileURL);
-                }
-            })
-        }
+					showImage(imageURL);
+					var currentTimeSpot = $.now();
+					localStorage.setItem("coverImageURL", imageURL);
+					localStorage.setItem("lastTimeSpot", currentTimeSpot);
+					localStorage.setItem("imageFileURL", imageFileURL);
+				}
+			})
+		}
 
-        function showImage(imageURL, imageFileURL) {
-            var img = $("<img />", {
-                class: "coverImage",
-                src: imageURL,
-                alt: "none"
-            });
-            img.load(function () {
-                $(".coverImage").remove();
+		function showImage(imageURL, imageFileURL) {
+			var img = $("<img />", {
+				class: "coverImage",
+				src: imageURL,
+				alt: "none"
+			});
+			img.load(function () {
+				$(".coverImage").remove();
 
-                var littleImage = $(this).clone();
-                littleImage.css("height", "4em");
-                littleImage.appendTo($("#imageBox"));
-                $("#infoText").show();
-                $("#imageLink").attr("href", imageFileURL);
+				var littleImage = $(this).clone();
+				littleImage.css("height", "4em");
+				littleImage.appendTo($("#imageBox"));
+				$("#infoText").show();
+				$("#imageLink").attr("href", imageFileURL);
 
-                var imgWidth = this.width;
-                var imgHeight = this.height;
-                var windowWidth = $(window).width();
-                var windowHeight = $(window).height();
-                if (imgWidth / imgHeight < windowWidth / windowHeight) {
-                    $(this).width(windowWidth);
-                    $(this).height(imgHeight / imgWidth * windowWidth);
-                } else {
-                    $(this).width(imgWidth / imgHeight * windowHeight);
-                    $(this).height(windowHeight);
-                }
-                $(this).clone().appendTo($("#blurImage")).hide().fadeIn();
-                $(this).appendTo($("#cover")).hide().fadeIn();
-            })
-        }
+				$(this).appendTo($("#cover")).hide().fadeIn();
+			})
+		}
 
-        function textChange(obj) {
-            if (obj.value) $("#textInputPrewords").hide();
-            else $("#textInputPrewords").fadeIn();
+		function textChange(obj) {
 
-            if (focusTick == 0) {
-                $("#searchBar").addClass("searchBarFocused");
-                focusTick = 5;
-                nInterId = setInterval(inputFocused, 1000);
-            } else focusTick = 5;
-        }
+			if (focusTick == 0) {
+				$("#searchBar").addClass("searchBarFocused");
+				focusTick = 5;
+				nInterId = setInterval(inputFocused, 1000);
+			} else focusTick = 5;
+		}
 
-        function inputFocused() {
-            if (focusTick < 0) {
-                focusTick = 0;
-                clearInterval(nInterId);
-                $("#searchBar").removeClass("searchBarFocused");
-            } else focusTick = focusTick - 1;
-        }
+		function inputFocused() {
+			if (focusTick < 0) {
+				focusTick = 0;
+				clearInterval(nInterId);
+				$("#searchBar").removeClass("searchBarFocused");
+			} else focusTick = focusTick - 1;
+		}
 
-        function enterSearch(e) {
-            var code = (e.KeyCode ? e.KeyCode : e.which);
-            if (code == 13 && $("#textInput").val()) {
-                if (isURL($("#textInput").val())) document.location = "http://" + $("#textInput").val();
-                else {
-                    if (isGoogleEnabled) document.location = "https://google.com/search?q=" + $("#textInput").val();
-                    else document.location = "https://bing.com/search?q=" + $("#textInput").val();
-                }
-            }
-        }
+		function enterSearch(e) {
+			var code = (e.KeyCode ? e.KeyCode : e.which);
+			if (code == 13 && $("#textInput").val()) {
+				if (isURL($("#textInput").val())) {
+					if ($("#textInput").val().indexOf('http') == 0) {
+						document.location = $("#textInput").val();
+					} else {
+						document.location = "http://" + $("#textInput").val();
+					}
+				} else {
+					if (isGoogleEnabled) document.location = "https://www.google.co.jp/search?q=" + $("#textInput").val();
+					else document.location = "https://bing.com/search?q=" + $("#textInput").val();
+				}
+			}
+		}
 
-        function isURL(str) { // Function comes from Tom Gullen@stackoverflow.com
-            var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-                '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-                '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-                '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-            if (!pattern.test(str)) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-    </script>
+		function isURL(str) {
+			var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+				'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+				'((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+				'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+				'(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+				'(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+			return pattern.test(str);
+		}
+	</script>
 </head>
 
 <body>
-    <div id="cover"></div>
-    <div id="main">
-        <div id="searchBar">
-            <div id="textInputIcon">🔍</div>
-            <div id="textInputPrewords">Search</div>
-            <input id="textInput" value="" onInput="textChange(this)">
-        </div>
-    </div>
-    <div id="bottomBar">
-        <div id="blurShadow"></div>
-        <div id="blurImage">
-            <div id="blurMask"></div>
-        </div>
-        <div id="sites">
-            <!-- 
-        SVG icons come from Shota MIckaia@iconfinder.com
--->
-            <a href="https://plus.google.com">
-                <div class="siteButton"><img src="icons/googleplus.svg" class="siteIcon">
-                    <div class="siteTitle">Google+</div>
-                </div>
-            </a>
-            <a href="https://twitter.com">
-                <div class="siteButton"><img src="icons/twitter.svg" class="siteIcon">
-                    <div class="siteTitle">twitter</div>
-                </div>
-            </a>
-            <a href="https://apple.com">
-                <div class="siteButton"><img src="icons/apple.svg" class="siteIcon">
-                    <div class="siteTitle">Apple</div>
-                </div>
-            </a>
-            <a href="https://instagram.com">
-                <div class="siteButton"><img src="icons/instagram.svg" class="siteIcon">
-                    <div class="siteTitle">Instagram</div>
-                </div>
-            </a>
-            <a href="https://youtube.com">
-                <div class="siteButton"><img src="icons/youtube.svg" class="siteIcon">
-                    <div class="siteTitle">YouTube</div>
-                </div>
-            </a>
-            <a href="https://amazon.co.jp">
-                <div class="siteButton"><img src="icons/amazon.svg" class="siteIcon">
-                    <div class="siteTitle">Amazon</div>
-                </div>
-            </a>
-            <a href="https://github.com">
-                <div class="siteButton"><img src="icons/github.svg" class="siteIcon">
-                    <div class="siteTitle">GitHub</div>
-                </div>
-            </a>
-            <a href="https://reddit.com">
-                <div class="siteButton"><img src="icons/reddit.svg" class="siteIcon">
-                    <div class="siteTitle">Reddit</div>
-                </div>
-            </a>
-        </div>
-        <div id="infoText">
-            <a id="imageLink" href="" target="_blank">
-                <div id="imageBox"></div>
-                Download Picture
-            </a>
-        </div>
-    </div>
+	<div id="cover"></div>
+	<div id="main">
+		<div id="searchBar">
+			<div id="textInputIcon">🔍</div>
+			<input id="textInput" value="" placeholder="Search" onInput="textChange(this)">
+		</div>
+	</div>
+	<div id="bottomBar">
+		<div id="sites">
+			<div>
+				<a href="https://plus.google.com" class="siteButton"><img src="icons/googleplus.svg" class="siteIcon">
+					<div class="siteTitle">Google+</div>
+				</a>
+			</div>
+			<div>
+				<a href="https://twitter.com" class="siteButton"><img src="icons/twitter.svg" class="siteIcon">
+					<div class="siteTitle">Twitter</div>
+				</a>
+			</div>
+			<div>
+				<a href="https://apple.com" class="siteButton"><img src="icons/apple.svg" class="siteIcon">
+					<div class="siteTitle">Apple</div>
+				</a>
+			</div>
+			<div>
+				<a href="https://instagram.com" class="siteButton"><img src="icons/instagram.svg" class="siteIcon">
+					<div class="siteTitle">Instagram</div>
+				</a>
+			</div>
+			<div>
+				<a href="https://youtube.com" class="siteButton"><img src="icons/youtube.svg" class="siteIcon">
+					<div class="siteTitle">YouTube</div>
+				</a>
+			</div>
+			<div>
+				<a href="https://amazon.co.jp" class="siteButton"><img src="icons/amazon.svg" class="siteIcon">
+					<div class="siteTitle">Amazon</div>
+				</a>
+			</div>
+			<div>
+				<a href="https://github.com" class="siteButton"><img src="icons/github.svg" class="siteIcon">
+					<div class="siteTitle">GitHub</div>
+				</a>
+			</div>
+			<div>
+				<a href="https://reddit.com" class="siteButton"><img src="icons/reddit.svg" class="siteIcon">
+					<div class="siteTitle">Reddit</div>
+				</a>
+			</div>
+		</div>
+		<div id="infoText">
+			<a id="imageLink" href="" target="_blank">
+				<div id="imageBox"></div>
+				Download Picture
+			</a>
+		</div>
+	</div>
 </body>
 
 </html>
