@@ -6,4 +6,6 @@
 /.gitignore
 /undefined
 
+.DS_Store
+
 /background/*
