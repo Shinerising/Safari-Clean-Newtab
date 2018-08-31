@@ -1,7 +1,7 @@
 /*eslint-env es6*/
 
 window.config = {
-    "local": true, // Make it true if only local images used
+    "local": false, // Make it true if only local images used
     "count": 10, // Local image count
     "search": "google", //Choose google or bing
 
