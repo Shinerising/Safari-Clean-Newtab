@@ -1,6 +1,8 @@
 body {
     margin: 0;
     font-size: 16px;
+    height: 100%;
+    overflow: hidden;
 }
 
 a {
@@ -14,13 +16,16 @@ a {
     top: 0;
     height: 100%;
     width: 100%;
+    background: #D3CCE3;
+    background: linear-gradient(to bottom, #E9E4F0, #D3CCE3);
+    transition: background .5s;
 }
 
 .coverImage {
     object-fit: cover;
 }
 
-#cover > .coverImage {
+#cover>.coverImage {
     width: 100%;
     height: 100%;
 }
@@ -35,38 +40,35 @@ a {
 }
 
 #searchBar {
-    width: 40em;
-    height: 4em;
+    max-width: 30em;
+    width: 80vw;
+    height: 3.2em;
     margin: 15em auto;
     position: relative;
-    border-radius: .5em;
-    background: rgba(240, 250, 254, .5);
+    border-radius: 1em;
+    background: rgba(255, 255, 255, .5);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
-    box-shadow: 0em 2em 5em rgba(100, 100, 100, .3);
+    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5rem rgba(0, 0, 0, .1);
     opacity: .8;
     transition: 0.5s opacity, 0.5s background;
 }
 
 #searchBar:hover {
     opacity: 1;
-    background: rgba(240, 250, 254, .8);
-    box-shadow: 0em 2em 5em rgba(100, 100, 100, .6);
+    background: rgba(255, 255, 255, .8);
 }
 
 #searchBar.searchBarFocused {
     opacity: 1;
-    box-shadow: 0em 2em 5em rgba(100, 100, 100, .6);
 }
 
 #textInputIcon {
     position: absolute;
-    width: 0;
-    top: 0.5em;
-    left: 0.5em;
-    font-size: 2em;
-    line-height: 1.2em;
-    font-family: Roboto;
-    color: gray;
+    top: .8em;
+    left: .8em;
+    width: 1.7rem;
+    height: 1.8rem;
+    background: url(icons/search.svg) no-repeat;
 }
 
 #textInput {
@@ -74,14 +76,20 @@ a {
     border: none;
     top: 0.3em;
     left: 2em;
-    width: 18em;
-    font-size: 2em;
+    width: calc(100% - 3em);
+    font-size: 1.6em;
     line-height: 1.3em;
     padding: 0em;
-    font-family: Roboto;
+    font-family: SF UI Display;
     background: transparent;
     border-collapse: collapse;
     border-spacing: 0;
+    color: #455A64;
+}
+
+#textInput::placeholder {
+    color: black;
+    opacity: .4;
 }
 
 #textInput:focus {
@@ -99,40 +107,36 @@ a {
     color: gray;
 }
 
-#bottomBar {
+#bottom {
     position: absolute;
     width: 100%;
-    bottom: 0;
-    height: 8.5em;
-    background: rgba(255,255,255,.5);
+    bottom: 1em;
+}
+
+#bottomBar {
+    margin: 0 auto;
+    position: relative;
+    width: 42em;
+    height: 4em;
+    padding: 1em .5em;
+    background: rgba(255, 255, 255, .6);
+    border-radius: 1.35rem;
+    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5rem rgba(0, 0, 0, .1);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     -webkit-animation: flyBottom .7s .5s both;
 }
 
-#bottomBar:before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    top: -2rem;
-    height: 2em;
-    background-image: linear-gradient(to bottom,rgba(0,0,0,0),rgba(0,0,0,.1));
-}
-
 #sites {
-    padding: 0 2%;
-    height: 8.5em;
-    display: flex;
+    width: 100%;
     position: relative;
-    overflow: hidden;
-    -webkit-animation: flyBottom .5s .7s both;
+    display: flex;
 }
 
-#sites > div {
+#sites>div {
     flex-grow: 1;
 }
 
 .siteButton {
-    margin-top: 1.5em;
     display: inline-block;
     width: 100%;
     text-align: center;
@@ -144,13 +148,15 @@ a {
 }
 
 .siteIcon {
-    width: 4.8em;
-    height: 4.8em;
-    border-radius: 1em;
+    width: 4em;
+    height: 4em;
+    border-radius: 22.5%;
+    box-shadow: 0 0 .1em rgba(0, 0, 0, .3);
     display: inline-block;
 }
 
 .siteTitle {
+    display: none;
     font-family: SF UI Display;
     font-size: .9em;
     line-height: 2em;
@@ -160,73 +166,73 @@ a {
 
 #infoText {
     position: absolute;
-    right: 1em;
-    top: -7em;
-    height: 6em;
-    text-align: center;
+    width: 15em;
+    left: 2em;
+    bottom: 0;
     font-family: SF UI Display;
-    color: white;
+    color: #FFF;
     font-size: 0.8em;
-    line-height: 2em;
-    font-weight: bold;
-    -webkit-transform: rotate(5deg);
-    text-shadow: 0px 1px 5px black;
-    cursor: pointer;
+    line-height: 1.6em;
+    text-shadow: 0 0 .2em rgba(0, 0, 0, .6);
     display: none;
-    transition: font-size 0.1s, -webkit-transform 0.5s;
-    -webkit-animation: flyTop .5s 2s both;
+    opacity: .5;
+    transition: opacity .3s;
+    animation: fadeIn .5s 2s backwards;
 }
 
 #infoText:hover {
-    -webkit-transform: rotate(0deg);
-    font-size: 1em;
+    opacity: 1;
 }
 
-#infoText:active {
-    top: -6.5em;
-}
-
-#imageBox .coverImage {
-    height: 4em;
-    border: solid white 0.5em;
-    box-shadow: 2px 2px 5px rgba(100, 100, 100, .6);
+#imageLink:hover,
+#copyrightLink:hover,
+#authorLink:hover {
+    text-decoration: underline;
 }
 
 .click {
-    -webkit-animation: shock 0.2s;
+    -webkit-animation: shock .5s;
 }
 
 @-webkit-keyframes shock {
     0% {
-        -webkit-transform: rotate(0deg);
-    }
-    25% {
-        -webkit-transform: rotate(-20deg);
-    }
-    75% {
-        -webkit-transform: rotate(40deg);
+        -webkit-transform: scale(1) translateY(0);
+        opacity: 1;
+        -webkit-filter: blur(0);
     }
     100% {
-        -webkit-transform: rotate(0deg);
+        -webkit-transform: scale(5) translateY(-1em);
+        opacity: 0;
+        -webkit-filter: blur(2em);
     }
 }
 
 @-webkit-keyframes flyBottom {
     from {
-        opacity: 0;
+        transform: translateY(8em);
     }
     to {
-        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-@-webkit-keyframes flyTop {
+@-webkit-keyframes fadeIn {
     from {
         opacity: 0;
-        top: -10em;
     }
     to {
-        opacity: 1;
-        top: -8em;
+        opacity: .5;
+    }
+}
+
+@media only screen and (max-width: 1080px) {
+    #infoText {
+        bottom: 8em;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    #bottom {
+        font-size: 2.2vw;
     }
 }
