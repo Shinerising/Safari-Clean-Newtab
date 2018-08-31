@@ -7,5 +7,5 @@ window.config = {
 
     "api": "splash", // Don't change it
     "size": "regular", // Change it to raw, full, regular, small
-    "keyword": "funny" // Change it to cat, soccer, flower, etc. Or make it false to load random image
+    "keyword": "" // Change it to cat, soccer, flower, etc. Or make it false to load random image
 };
