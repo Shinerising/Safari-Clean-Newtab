@@ -25,7 +25,7 @@ a {
     object-fit: cover;
 }
 
-#cover>.coverImage {
+#cover > .coverImage {
     width: 100%;
     height: 100%;
 }
@@ -48,7 +48,7 @@ a {
     border-radius: 1em;
     background: rgba(255, 255, 255, .5);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
-    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5rem rgba(0, 0, 0, .1);
+    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
     opacity: .8;
     transition: 0.5s opacity, 0.5s background;
 }
@@ -66,9 +66,9 @@ a {
     position: absolute;
     top: .8em;
     left: .8em;
-    width: 1.7rem;
-    height: 1.8rem;
-    background: url(icons/search.svg) no-repeat;
+    width: 1.7em;
+    height: 1.8em;
+    background: url(../icons/search.svg) no-repeat;
 }
 
 #textInput {
@@ -76,15 +76,16 @@ a {
     border: none;
     top: 0.3em;
     left: 2em;
-    width: calc(100% - 3em);
+    width: calc(100% - 2.4em);
     font-size: 1.6em;
     line-height: 1.3em;
     padding: 0em;
-    font-family: SF UI Display;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: transparent;
     border-collapse: collapse;
     border-spacing: 0;
     color: #455A64;
+    -webkit-appearance: unset;
 }
 
 #textInput::placeholder {
@@ -120,8 +121,8 @@ a {
     height: 4em;
     padding: 1em .5em;
     background: rgba(255, 255, 255, .6);
-    border-radius: 1.35rem;
-    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5rem rgba(0, 0, 0, .1);
+    border-radius: 1.35em;
+    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     -webkit-animation: flyBottom .7s .5s both;
 }
@@ -132,7 +133,7 @@ a {
     display: flex;
 }
 
-#sites>div {
+#sites > div {
     flex-grow: 1;
 }
 
@@ -157,11 +158,35 @@ a {
 
 .siteTitle {
     display: none;
-    font-family: SF UI Display;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: .9em;
     line-height: 2em;
     letter-spacing: .03em;
     color: #333;
+}
+
+#settingIcon {
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    right: 2em;
+    bottom: 0;
+    opacity: .4;
+    cursor: pointer;
+    transform-style: flat;
+    transform-origin: center;
+    transition: opacity .3s, transform .3s;
+    animation: fadeIn .5s 2.5s backwards;
+    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
+}
+
+#settingIcon:hover {
+    opacity: .6;
+    transform: rotate(90deg);
+}
+
+#settingIcon:active {
+    filter: brightness(0.5);
 }
 
 #infoText {
@@ -169,7 +194,7 @@ a {
     width: 15em;
     left: 2em;
     bottom: 0;
-    font-family: SF UI Display;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     color: #FFF;
     font-size: 0.8em;
     line-height: 1.6em;
@@ -194,12 +219,199 @@ a {
     -webkit-animation: shock .5s;
 }
 
+.settingPanel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 24em;
+    height: 18em;
+    margin: auto;
+    overflow: hidden;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #37474F;
+    line-height: 1.6em;
+    background: rgba(255, 255, 255, .6);
+    border-radius: .4em;
+    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    transform: translateY(10em) scale(.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s, transform .3s;
+}
+
+.settingPanel.show {
+    display: block;
+    transform: none;
+    opacity: 1;
+    z-index: 28;
+    pointer-events: all;
+}
+
+.settingTitle {
+    width: 100%;
+    line-height: 2em;
+    height: 2em;
+    padding: 0 .6em;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.settingClose {
+    float: right;
+    display: inline-block;
+    border-left: #A0A0A0 solid 1px;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(255, 255, 255, .5);
+    transition: opacity .3s;
+}
+
+.settingClose:hover {
+    background: #ECEFF1;
+}
+
+.settingForm {
+    height: calc(100% - 4.9em);
+    box-sizing: border-box;
+    border-top: #A0A0A0 solid 1px;
+    border-bottom: #A0A0A0 solid 1px;
+    overflow: hidden;
+}
+
+.settingFrame {
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    padding: .3em .8em;
+    height: calc(100% - 1em);
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+.settingItem {
+    flex-grow: 1;
+    font-size: .8em;
+    line-height: 1.8em;
+    padding: .1em .4em;
+    margin: .6em 0;
+    box-sizing: border-box;
+    width: 50%;
+    max-width: 50%;
+}
+
+.settingItem.full {
+    width: 100%;
+    max-width: 100%;
+}
+
+.settingItem > label {
+    margin: 0 .3em;
+    float: left;
+}
+
+.settingItem > div {
+    position: relative;
+    padding: 0 .2em;
+}
+
+.settingItem > div > input,
+.settingItem > div > select {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    width: 100%;
+    outline: medium;
+    height: 2em;
+    padding: 0 .2em;
+    border: 1px solid #b0bec5;
+    box-sizing: border-box;
+    border-radius: 0;
+    transition: border-color .3s;
+}
+
+.settingItem > div > input[type="color"] {
+    padding: 0 0.8em;
+}
+
+.settingItem > div > i {
+    position: absolute;
+    display: inline-block;
+    font-style: normal;
+    text-align: center;
+    width: 1em;
+    color: #37474F;
+}
+
+.settingItem > div > i:last-child {
+    right: 0;
+    width: 1.5em;
+    font-size: 1.2em;
+    line-height: 1em;
+    color: inherit;
+}
+
+.settingItem > div > select {
+    cursor: pointer;
+}
+
+.settingItem > div > input:focus,
+.settingItem > div > select:focus {
+    border-color: #607D8B;
+}
+
+.settingFooter {
+    background: rgba(255, 255, 255, .5);
+}
+
+.settingButton {
+    position: relative;
+    display: inline-block;
+    border-radius: .2em;
+    overflow: hidden;
+    cursor: pointer;
+    font-size: .8em;
+    color: #37474F;
+    text-align: center;
+    box-shadow: 0 0 .1em #444;
+    background: #FDFEFF;
+    transition: opacity .3s, background .3s, box-shadow .3s;
+    line-height: 2em;
+    width: auto;
+    height: 2em;
+    padding: 0 .6em;
+    margin: .8em;
+}
+
+.settingButton:hover {
+    box-shadow: 0 0 .1em #000;
+}
+
+.settingButton:active {
+    background: #EDEEEF;
+}
+
+.settingButton.submit {
+    float: right;
+    margin-left: 0;
+}
+
+.settingButton.cancel {
+    float: left;
+    margin-right: 0;
+}
+
 @-webkit-keyframes shock {
     0% {
         -webkit-transform: scale(1) translateY(0);
         opacity: 1;
         -webkit-filter: blur(0);
     }
+
     100% {
         -webkit-transform: scale(5) translateY(-1em);
         opacity: 0;
@@ -211,6 +423,7 @@ a {
     from {
         transform: translateY(8em);
     }
+
     to {
         transform: translateY(0);
     }
@@ -220,6 +433,7 @@ a {
     from {
         opacity: 0;
     }
+
     to {
         opacity: .5;
     }

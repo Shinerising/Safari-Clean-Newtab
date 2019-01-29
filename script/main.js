@@ -12,6 +12,17 @@ let suggestion = "";
 let lastKey;
 
 $(document).ready(() => {
+    if (localStorage && localStorage.getItem("config")) {
+        let data = localStorage.getItem("config");
+        window.config = JSON.parse(data);
+    }
+
+    $("[data-key='local']").val(window.config.local.toString());
+    $("[data-key='count']").val(window.config.count);
+    $("[data-key='search']").val(window.config.search);
+    $("[data-key='size']").val(window.config.size);
+    $("[data-key='keyword']").val(window.config.keyword);
+
     if (window.config.search === "bing") {
         isGoogleEnabled = false;
     }
@@ -108,6 +119,30 @@ $(document).ready(() => {
         $(this).addClass("click");
     });
 
+    $("#settingIcon").click(() => {
+        $(".settingPanel").toggleClass("show");
+    });
+
+    $(".settingClose").click(() => {
+        $(".settingPanel").removeClass("show");
+    });
+
+    $(".settingButton.cancel").click(() => {
+        $(".settingPanel").removeClass("show");
+    });
+
+    $(".settingButton.submit").click(() => {
+
+        window.config.local = $("[data-key='local']").val() == "true";
+        window.config.count = $("[data-key='count']").val();
+        window.config.search = $("[data-key='search']").val();
+        window.config.size = $("[data-key='size']").val();
+        window.config.keyword = $("[data-key='keyword']").val();
+
+        localStorage.setItem("config", JSON.stringify(window.config));
+
+        $(".settingPanel").removeClass("show");
+    });
 });
 
 let requestImage = (callback) => {
@@ -161,7 +196,9 @@ let showImage = (data) => {
         $(".coverImage").fadeOut(500);
         img.load(() => {
             $(".coverImage").remove();
-            $("#imageLink").attr("href", data.links.download);
+            // There are only 3 Clickable links: Image Page(Head to Unsplash but NOT to Image File), 
+            //                                   User Profile, and Unsplash Homepage(static link).
+            $("#imageLink").attr("href", data.links.html);
             $("#authorLink").attr("href", data.user.links.html);
             $("#authorLink").text(data.user.name);
             $("#model").text(data.exif ? data.exif.model : "");

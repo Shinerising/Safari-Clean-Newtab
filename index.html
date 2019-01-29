@@ -12,7 +12,7 @@
     <div id="main">
         <div id="searchBar">
             <div id="textInputIcon"></div>
-            <input id="textInput" value="" placeholder="Search">
+            <input id="textInput" value="" type="search" placeholder="Search">
         </div>
     </div>
     <div id="bottom">
@@ -60,6 +60,7 @@
                 </div>
             </div>
         </div>
+        <svg id="settingIcon" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M61.66,27.34l-6.34-1.06a23.65,23.65,0,0,0-2-5.36l4.06-5a2.8,2.8,0,0,0-.09-3.62L54.76,9.43a2.79,2.79,0,0,0-3.58-.51l-5.43,3.4a24,24,0,0,0-8-3.61L36.69,2.34A2.79,2.79,0,0,0,33.93,0h-3.8a2.78,2.78,0,0,0-2.75,2.34L26.31,8.72a23.93,23.93,0,0,0-6.73,2.79L14.42,7.83a2.79,2.79,0,0,0-3.6.3L8.13,10.82a2.78,2.78,0,0,0-.29,3.6l3.68,5.17a24,24,0,0,0-2.77,6.68L2.34,27.34A2.79,2.79,0,0,0,0,30.1v3.8a2.79,2.79,0,0,0,2.34,2.76l6.41,1.07a23.74,23.74,0,0,0,2.12,5.58l-4,5a2.8,2.8,0,0,0,.09,3.62l2.52,2.83a2.79,2.79,0,0,0,3.58.51l5.5-3.45a23.79,23.79,0,0,0,7.79,3.45l1.07,6.38A2.78,2.78,0,0,0,30.13,64h3.8a2.79,2.79,0,0,0,2.76-2.34l1.07-6.37a24.06,24.06,0,0,0,6.65-2.75l5.37,3.83a2.8,2.8,0,0,0,3.61-.3l2.68-2.68a2.8,2.8,0,0,0,.3-3.61l-3.83-5.36a23.72,23.72,0,0,0,2.78-6.7l6.34-1.06A2.79,2.79,0,0,0,64,33.9V30.1A2.79,2.79,0,0,0,61.66,27.34ZM32.1,44a12,12,0,1,1,12-12A12,12,0,0,1,32.1,44Z"/></svg>
         <div id="infoText">
             <div>
                 <span id="model"></span>
@@ -69,15 +70,56 @@
             </div>
             <div>
                 <a id="imageLink" href="" target="_blank">
-                    Download Original Picture
+                    Click to See Original Image
                 </a></div>
-            <div><a id="copyrightLink" href="https://unsplash.com/" target="_blank">
+            <div>
+                <a id="copyrightLink" href="https://unsplash.com/" target="_blank">
                     ©Unsplash
                 </a> &nbsp;
                 <a id="authorLink" href="" target="_blank">
                     About Blank
                 </a>
             </div>
+        </div>
+    </div>
+    <div class="settingPanel">
+        <div class="settingHeader">
+            <div class="settingClose">✖︎</div>
+            <div class="settingTitle">Setting Panel</div>
+        </div>
+        <div class="settingForm">
+            <div class="settingFrame">
+                <div class="settingItem"><label>Local Images</label>
+                    <div><select data-key="local">
+                            <option value="false">False</option>
+                            <option value="true">True</option>
+                        </select></div>
+                </div>
+                <div class="settingItem"><label>Images Count</label>
+                    <div><input data-key="count"></div>
+                </div>
+                <div class="settingItem"><label>Search Engine</label>
+                    <div><select data-key="search">
+                            <option value="google">Google</option>
+                            <option value="bing">Bing</option>
+                        </select></div>
+                </div>
+                <div class="settingItem"><label>Image Size</label>
+                    <div><select data-key="size">
+                            <option value="raw">Raw</option>
+                            <option value="full">Full</option>
+                            <option value="regular">Regular</option>
+                            <option value="small">Small</option>
+                        </select></div>
+                </div>
+                <div class="settingItem full"><label>Image Keyword</label>
+                    <div><input data-key="keyword"></div>
+                </div>
+            </div>
+        </div>
+        <div class="settingFooter">
+            <div class="settingButton submit"><b>Save Changes</b></div>
+            <div class="settingButton cancel">Discard</div>
         </div>
     </div>
     <script type="text/javascript" src="./script/jquery-2.1.3.min.js"></script>
