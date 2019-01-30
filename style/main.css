@@ -141,11 +141,11 @@ a {
     display: inline-block;
     width: 100%;
     text-align: center;
-    transition: -webkit-filter .3s;
+    transition: filter .3s;
 }
 
 .siteButton:hover {
-    -webkit-filter: brightness(.6);
+    filter: brightness(.6);
 }
 
 .siteIcon {
@@ -171,7 +171,7 @@ a {
     height: 1em;
     right: 2em;
     bottom: 0;
-    opacity: .4;
+    opacity: .6;
     cursor: pointer;
     transform-style: flat;
     transform-origin: center;
@@ -181,12 +181,12 @@ a {
 }
 
 #settingIcon:hover {
-    opacity: .6;
+    opacity: 1;
     transform: rotate(90deg);
 }
 
 #settingIcon:active {
-    filter: brightness(0.5);
+    filter: brightness(.6);
 }
 
 #infoText {
@@ -445,8 +445,20 @@ a {
     }
 }
 
+@media only screen and (max-width: 800px) {
+    #settingIcon {
+        bottom: 7em;
+    }
+}
+
 @media only screen and (max-width: 720px) {
     #bottom {
         font-size: 2.2vw;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    #searchBar {
+        margin: 40vh auto;
     }
 }
