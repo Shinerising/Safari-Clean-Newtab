@@ -3,11 +3,18 @@ body {
     font-size: 16px;
     height: 100%;
     overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 a {
     text-decoration: none;
     color: white;
+}
+
+input {
+    user-select: text;
+    -webkit-user-select: text;
 }
 
 #cover {
@@ -176,7 +183,7 @@ a {
     transform-style: flat;
     transform-origin: center;
     transition: opacity .3s, transform .3s;
-    animation: fadeIn .5s 2.5s backwards;
+    animation: fadeIn .5s 1s backwards;
     box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
 }
 
@@ -277,7 +284,7 @@ a {
 }
 
 .settingForm {
-    height: calc(100% - 4.9em);
+    height: calc(100% - 5em);
     box-sizing: border-box;
     border-top: #A0A0A0 solid 1px;
     border-bottom: #A0A0A0 solid 1px;
@@ -289,9 +296,7 @@ a {
     align-content: flex-start;
     flex-wrap: wrap;
     padding: .3em .8em;
-    height: calc(100% - 1em);
     box-sizing: border-box;
-    overflow-y: scroll;
 }
 
 .settingItem {
