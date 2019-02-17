@@ -10,9 +10,56 @@ let db;
 let updateQuery, getQuery;
 let suggestion = "";
 let lastKey;
+let storageEnabled = true;
 
 $(document).ready(() => {
-    if (localStorage && localStorage.getItem("config")) {
+
+    $("#textInput").focus();
+
+    $("#textInput").bind("keydown", {}, enterSearch);
+
+    $("#textInput").bind("input", {}, textChange);
+
+    $(".siteButton").click(() => {
+        $(".siteButton").removeClass("click");
+        $(this).addClass("click");
+    });
+
+    $("#settingIcon").click(() => {
+        $(".settingPanel").toggleClass("show");
+    });
+
+    $(".settingClose").click(() => {
+        $(".settingPanel").removeClass("show");
+    });
+
+    $(".settingButton.cancel").click(() => {
+        $(".settingPanel").removeClass("show");
+    });
+
+    $(".settingButton.submit").click(() => {
+        window.config.local = $("[data-key='local']").val() == "true";
+        window.config.count = $("[data-key='count']").val();
+        window.config.search = $("[data-key='search']").val();
+        window.config.history = $("[data-key='history']").val() == "true";
+        window.config.size = $("[data-key='size']").val();
+        window.config.keyword = $("[data-key='keyword']").val();
+
+        if (storageEnabled) {
+            localStorage.setItem("config", JSON.stringify(window.config));
+        }
+
+        $(".settingPanel").removeClass("show");
+    });
+
+    try {
+        localStorage;
+    } catch (e) {
+        storageEnabled = false;
+        $("#settingIcon").hide();
+    }
+
+    if (storageEnabled && localStorage.getItem("config")) {
         let data = localStorage.getItem("config");
         window.config = JSON.parse(data);
     }
@@ -20,6 +67,7 @@ $(document).ready(() => {
     $("[data-key='local']").val(window.config.local.toString());
     $("[data-key='count']").val(window.config.count);
     $("[data-key='search']").val(window.config.search);
+    $("[data-key='history']").val((window.config.history || false).toString());
     $("[data-key='size']").val(window.config.size);
     $("[data-key='keyword']").val(window.config.keyword);
 
@@ -30,7 +78,7 @@ $(document).ready(() => {
         let id = Math.floor(Math.random() * window.config.count) + 1;
         showImage("background/" + (id < 10 ? "0" : "") + id + ".jpg");
     } else {
-        if (localStorage && localStorage.getItem("imageInfo")) {
+        if (storageEnabled && localStorage.getItem("imageInfo")) {
             let data = localStorage.getItem("imageInfo");
             data = JSON.parse(data);
             if (data && data.urls) {
@@ -45,14 +93,15 @@ $(document).ready(() => {
             requestImage((data) => {
                 if (data && data.urls) {
                     showImage(data);
-                    localStorage.setItem("imageInfo", JSON.stringify(data));
+                    if (storageEnabled) {
+                        localStorage.setItem("imageInfo", JSON.stringify(data));
+                    }
                 }
             });
         }
     }
 
-
-    if (window.indexedDB) {
+    if (window.config.history && window.indexedDB) {
         let request = window.indexedDB.open(dbName, dbVersion);
 
         request.onupgradeneeded = (event) => {
@@ -107,42 +156,6 @@ $(document).ready(() => {
                 };
         };
     }
-
-    $("#textInput").focus();
-
-    $("#textInput").bind("keydown", {}, enterSearch);
-
-    $("#textInput").bind("input", {}, textChange);
-
-    $(".siteButton").click(() => {
-        $(".siteButton").removeClass("click");
-        $(this).addClass("click");
-    });
-
-    $("#settingIcon").click(() => {
-        $(".settingPanel").toggleClass("show");
-    });
-
-    $(".settingClose").click(() => {
-        $(".settingPanel").removeClass("show");
-    });
-
-    $(".settingButton.cancel").click(() => {
-        $(".settingPanel").removeClass("show");
-    });
-
-    $(".settingButton.submit").click(() => {
-
-        window.config.local = $("[data-key='local']").val() == "true";
-        window.config.count = $("[data-key='count']").val();
-        window.config.search = $("[data-key='search']").val();
-        window.config.size = $("[data-key='size']").val();
-        window.config.keyword = $("[data-key='keyword']").val();
-
-        localStorage.setItem("config", JSON.stringify(window.config));
-
-        $(".settingPanel").removeClass("show");
-    });
 });
 
 let requestImage = (callback) => {

@@ -4,6 +4,7 @@ window.config = {
     "local": false, // Make it true if only local images used
     "count": 10, // Local image count
     "search": "google", //Choose google or bing
+    "history": false, // Save search history or not
 
     "api": "unsplash", // Don't change it
     "size": "regular", // Change it to raw, full, regular, small

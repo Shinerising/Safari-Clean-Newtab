@@ -20,11 +20,21 @@ Download this repo, then set your homepage of browser to the local repo folder a
 
 ![Browser Setting Panel](./Images/setting.jpg)
 
-## Options
+## Custom Options
 
-Click the gear icon at right bottom side to open option panel like this:
+You can change settings by modifying the `config.js` script.
+
+To enable quick option panel, you must disable Local File Restrictions (Safari Only):
+
+- Enable Develop menu in Advanced panel of Safari Preferences
+- Click on the Develop menu
+- Select Disable Local File Restrictions
+
+Then you could refresh the page and click the gear icon at right bottom side to open option panel like this:
 
 <img src="./Images/option.jpg" width="400">
+
+## Option Items
 
 - Local Images
 
@@ -39,6 +49,10 @@ When using local images, you must set the count of looping images.
 - Search Engine
 
 Select search engine between Google and Bing.
+
+- Enable History
+
+If enable search history and autocomplete functions.
 
 - Image Size (Available for Network Images)
 
