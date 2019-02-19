@@ -61,7 +61,21 @@ $(document).ready(() => {
 
     if (storageEnabled && localStorage.getItem("config")) {
         let data = localStorage.getItem("config");
-        window.config = JSON.parse(data);
+        let localConfig = JSON.parse(data);
+        if (localConfig.version && localConfig.version == window.config.version) {
+            window.config = localConfig;
+        } else {
+            localStorage.setItem("config", JSON.stringify(window.config));
+        }
+    }
+
+    if (window.config.shortcuts) {
+        let parent = $("#sites");
+        window.config.shortcuts.forEach((element) => {
+            var template = `<a href="${element.link}" class="siteButton"><img src="${element.img}" class="siteIcon">
+                        <div class="siteTitle">${element.title}</div></a>`;
+            parent.append(template);
+        });
     }
 
     $("[data-key='local']").val(window.config.local.toString());

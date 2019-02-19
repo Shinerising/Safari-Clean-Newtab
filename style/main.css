@@ -119,12 +119,12 @@ input {
     position: absolute;
     width: 100%;
     bottom: 1em;
+    text-align: center;
 }
 
 #bottomBar {
-    margin: 0 auto;
-    position: relative;
-    width: 42em;
+    display: inline-block;
+    width: auto;
     height: 4em;
     padding: 1em .5em;
     background: rgba(255, 255, 255, .6);
@@ -140,8 +140,11 @@ input {
     display: flex;
 }
 
-#sites > div {
+#sites > a {
     flex-grow: 1;
+    width: 4em;
+    height: 4em;
+    padding: 0 .5em;
 }
 
 .siteButton {

@@ -17,48 +17,7 @@
     </div>
     <div id="bottom">
         <div id="bottomBar">
-            <div id="sites">
-                <div>
-                    <a href="https://google.com" class="siteButton"><img src="icons/google.png" class="siteIcon">
-                        <div class="siteTitle">Google</div>
-                    </a>
-                </div>
-                <div>
-                    <a href="https://twitter.com" class="siteButton"><img src="icons/twitter.png" class="siteIcon">
-                        <div class="siteTitle">Twitter</div>
-                    </a>
-                </div>
-                <div>
-                    <a href="https://apple.com" class="siteButton"><img src="icons/applestore.png" class="siteIcon">
-                        <div class="siteTitle">Apple</div>
-                    </a>
-                </div>
-                <div>
-                    <a href="https://instagram.com" class="siteButton"><img src="icons/instagram.png" class="siteIcon">
-                        <div class="siteTitle">Instagram</div>
-                    </a>
-                </div>
-                <div>
-                    <a href="https://youtube.com" class="siteButton"><img src="icons/youtube.png" class="siteIcon">
-                        <div class="siteTitle">YouTube</div>
-                    </a>
-                </div>
-                <div>
-                    <a href="https://amazon.co.jp" class="siteButton"><img src="icons/amazon.png" class="siteIcon">
-                        <div class="siteTitle">Amazon</div>
-                    </a>
-                </div>
-                <div>
-                    <a href="https://github.com" class="siteButton"><img src="icons/github.png" class="siteIcon">
-                        <div class="siteTitle">GitHub</div>
-                    </a>
-                </div>
-                <div>
-                    <a href="https://translate.google.com" class="siteButton"><img src="icons/translate.png" class="siteIcon">
-                        <div class="siteTitle">Translate</div>
-                    </a>
-                </div>
-            </div>
+            <div id="sites"></div>
         </div>
         <svg id="settingIcon" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
             <path d="M61.66,27.34l-6.34-1.06a23.65,23.65,0,0,0-2-5.36l4.06-5a2.8,2.8,0,0,0-.09-3.62L54.76,9.43a2.79,2.79,0,0,0-3.58-.51l-5.43,3.4a24,24,0,0,0-8-3.61L36.69,2.34A2.79,2.79,0,0,0,33.93,0h-3.8a2.78,2.78,0,0,0-2.75,2.34L26.31,8.72a23.93,23.93,0,0,0-6.73,2.79L14.42,7.83a2.79,2.79,0,0,0-3.6.3L8.13,10.82a2.78,2.78,0,0,0-.29,3.6l3.68,5.17a24,24,0,0,0-2.77,6.68L2.34,27.34A2.79,2.79,0,0,0,0,30.1v3.8a2.79,2.79,0,0,0,2.34,2.76l6.41,1.07a23.74,23.74,0,0,0,2.12,5.58l-4,5a2.8,2.8,0,0,0,.09,3.62l2.52,2.83a2.79,2.79,0,0,0,3.58.51l5.5-3.45a23.79,23.79,0,0,0,7.79,3.45l1.07,6.38A2.78,2.78,0,0,0,30.13,64h3.8a2.79,2.79,0,0,0,2.76-2.34l1.07-6.37a24.06,24.06,0,0,0,6.65-2.75l5.37,3.83a2.8,2.8,0,0,0,3.61-.3l2.68-2.68a2.8,2.8,0,0,0,.3-3.61l-3.83-5.36a23.72,23.72,0,0,0,2.78-6.7l6.34-1.06A2.79,2.79,0,0,0,64,33.9V30.1A2.79,2.79,0,0,0,61.66,27.34ZM32.1,44a12,12,0,1,1,12-12A12,12,0,0,1,32.1,44Z" /></svg>
@@ -91,28 +50,28 @@
         <div class="settingForm">
             <div class="settingFrame">
                 <div class="settingItem"><label>Local Images</label>
-                    <div><select data-key="local">
+                    <div><select data-key="local" tabindex="-1">
                             <option value="false">False</option>
                             <option value="true">True</option>
                         </select></div>
                 </div>
                 <div class="settingItem"><label>Images Count</label>
-                    <div><input data-key="count"></div>
+                    <div><input data-key="count" tabindex="-1"></div>
                 </div>
                 <div class="settingItem"><label>Search Engine</label>
-                    <div><select data-key="search">
+                    <div><select data-key="search" tabindex="-1">
                             <option value="google">Google</option>
                             <option value="bing">Bing</option>
                         </select></div>
                 </div>
                 <div class="settingItem"><label>Enable History</label>
-                    <div><select data-key="history">
+                    <div><select data-key="history" tabindex="-1">
                             <option value="false">False</option>
                             <option value="true">True</option>
                         </select></div>
                 </div>
                 <div class="settingItem"><label>Image Size</label>
-                    <div><select data-key="size">
+                    <div><select data-key="size" tabindex="-1">
                             <option value="raw">Raw</option>
                             <option value="full">Full</option>
                             <option value="regular">Regular</option>
@@ -120,7 +79,7 @@
                         </select></div>
                 </div>
                 <div class="settingItem"><label>Image Keyword</label>
-                    <div><input data-key="keyword"></div>
+                    <div><input data-key="keyword" tabindex="-1"></div>
                 </div>
             </div>
         </div>
