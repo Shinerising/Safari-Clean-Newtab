@@ -114,7 +114,9 @@ $(document).ready(() => {
 
     $(".settingButton.image").click(() => {
         let term = $("[data-key='shortcutTitle']").val();
-
+        if (term.length == 0) {
+            return;
+        }
         let url = `https://itunes.apple.com/search?term=${term}&limit=10&media=software`;
         $(".settingButton.image").addClass("disabled");
         fetch(url)
