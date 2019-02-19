@@ -112,6 +112,34 @@ $(document).ready(() => {
         $(".settingPanel.shortcut").removeClass("show");
     });
 
+    $(".settingButton.image").click(() => {
+        let term = $("[data-key='shortcutTitle']").val();
+
+        let url = `https://itunes.apple.com/search?term=${term}&limit=10&media=software`;
+        $(".settingButton.image").addClass("disabled");
+        fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.results) {
+                    let parent = $(".settingItem.full.image");
+                    parent.empty();
+                    data.results.forEach((item, idx) => {
+                        if (idx >= 5) {
+                            return;
+                        }
+                        parent.append(`<img src="${item.artworkUrl60}" alt="${term}">`);
+                    });
+                }
+                $(".settingButton.image").removeClass("disabled");
+            });
+    });
+
+    $(".settingItem.full.image").click((e) => {
+        if (e.target.nodeName == "IMG") {
+            $("[data-key='shortcutImage']").val($(e.target).attr("src").replace("60x60bb", "256x256bb"));
+        }
+    });
+
     try {
         localStorage;
     } catch (e) {
@@ -152,6 +180,10 @@ $(document).ready(() => {
             $(e.currentTarget).addClass("hide");
             e.preventDefault();
         } else if ($(e.currentTarget).hasClass("add")) {
+            $("[data-key='shortcutTitle']").val("");
+            $("[data-key='shortcutLink']").val("");
+            $("[data-key='shortcutImage']").val("");
+            $(".settingItem.full.image").empty();
             $(".settingPanel.config").removeClass("show");
             $(".settingPanel.shortcut").toggleClass("show");
             e.preventDefault();

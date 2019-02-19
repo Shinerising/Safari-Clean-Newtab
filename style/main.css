@@ -303,6 +303,7 @@ input {
     color: #37474F;
     line-height: 1.6em;
     border-radius: .4em;
+    overflow: hidden;
     box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
     background: #FFFFFF;
     transform: translateY(10em) scale(.6);
@@ -317,7 +318,8 @@ input {
     right: -7em;
     top: auto;
     bottom: 8em;
-    height: 20em;
+    height: auto;
+    overflow: visible;
     transform: translateY(12em) scale(.2);
 }
 
@@ -390,6 +392,28 @@ input {
     box-sizing: border-box;
     width: 50%;
     max-width: 50%;
+}
+
+.settingItem.image {
+    padding: 0 .3em;
+    margin: 0;
+    display: flex;
+}
+
+.settingItem.image > img {
+    flex-grow: 1;
+    width: 3em;
+    height: 3em;
+    display: block;
+    margin: .5em;
+    border-radius: 22.5%;
+    box-shadow: 0 0 .1em rgba(0, 0, 0, .7);
+    cursor: pointer;
+}
+
+.settingItem.image > img:hover {
+    filter: brightness(.6);
+    box-shadow: none;
 }
 
 .settingItem.full {
@@ -482,8 +506,9 @@ input {
     background: #EDEEEF;
 }
 
-.settingButton.diabled {
+.settingButton.disabled {
     background: #ADAEAF;
+    opacity: .6;
     pointer-events: none;
 }
 
@@ -500,7 +525,7 @@ input {
 }
 
 .settingButton.image {
-    margin: .4em 6em;
+    margin: .6em 6em;
     flex-grow: 1;
 }
 
