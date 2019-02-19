@@ -140,22 +140,78 @@ input {
     display: flex;
 }
 
-#sites > a {
+#sites.editing .siteButton > i {
+    pointer-events: all;
+    opacity: 1;
+    transform: none;
+}
+
+#sites.editing .siteButton.add {
+    pointer-events: all;
+    opacity: 1;
+    width: 4em;
+    padding: 0 .5em;
+    transform: none;
+}
+
+.siteButton {
+    position: relative;
     flex-grow: 1;
     width: 4em;
     height: 4em;
     padding: 0 .5em;
-}
-
-.siteButton {
     display: inline-block;
-    width: 100%;
     text-align: center;
-    transition: filter .3s;
+    transition: opacity .3s, transform .3s, width .2s, padding .2s;
 }
 
-.siteButton:hover {
-    filter: brightness(.6);
+.siteButton.add,
+.siteButton.hide {
+    pointer-events: none;
+    opacity: 0;
+    width: 0;
+    padding: 0;
+    transform: scale(0);
+}
+
+.siteButton.add > .siteIcon {
+    background: rgba(255, 255, 255, .6);
+}
+
+.siteButton.add > .siteIcon::before {
+    content: "+";
+    color: #898989;
+    font-size: 2.5em;
+    line-height: 1.5;
+}
+
+.siteButton > i {
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    padding: .5em;
+    left: -.3em;
+    top: -1em;
+    border-radius: 50%;
+    font-style: normal;
+    font-size: .8em;
+    line-height: 1;
+    color: #898989;
+    transition: background .3s;
+    background: rgba(255, 255, 255, .8);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s, transform .3s, background .3s;
+}
+
+.siteButton > i::before {
+    content: "✕";
+}
+
+.siteButton > i:hover {
+    background: rgba(55, 55, 55, .8);
 }
 
 .siteIcon {
@@ -164,6 +220,11 @@ input {
     border-radius: 22.5%;
     box-shadow: 0 0 .1em rgba(0, 0, 0, .3);
     display: inline-block;
+    transition: filter .3s;
+}
+
+.siteIcon:hover {
+    filter: brightness(.6);
 }
 
 .siteTitle {
@@ -226,7 +287,7 @@ input {
 }
 
 .click {
-    -webkit-animation: shock .5s;
+    animation: shock .5s;
 }
 
 .settingPanel {
@@ -238,18 +299,36 @@ input {
     width: 24em;
     height: 18em;
     margin: auto;
-    overflow: hidden;
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     color: #37474F;
     line-height: 1.6em;
-    background: rgba(255, 255, 255, .6);
     border-radius: .4em;
     box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: #FFFFFF;
     transform: translateY(10em) scale(.6);
     opacity: 0;
     pointer-events: none;
     transition: opacity .3s, transform .3s;
+}
+
+.settingPanel.shortcut {
+    left: auto;
+    width: 18em;
+    right: -7em;
+    top: auto;
+    bottom: 8em;
+    height: 20em;
+    transform: translateY(12em) scale(.2);
+}
+
+.settingPanel.shortcut::after {
+    content: "";
+    position: absolute;
+    bottom: -2em;
+    left: 8em;
+    border: 1em solid transparent;
+    border-top-color: #FFF;
+    border-right-color: transparent;
 }
 
 .settingPanel.show {
@@ -385,7 +464,7 @@ input {
     font-size: .8em;
     color: #37474F;
     text-align: center;
-    box-shadow: 0 0 .1em #444;
+    box-shadow: 0 0 1px #666, 0 1px 1px #AAA;
     background: #FDFEFF;
     transition: opacity .3s, background .3s, box-shadow .3s;
     line-height: 2em;
@@ -396,21 +475,33 @@ input {
 }
 
 .settingButton:hover {
-    box-shadow: 0 0 .1em #000;
+    box-shadow: 0 0 1px #000, 0 1px 1px #777;
 }
 
 .settingButton:active {
     background: #EDEEEF;
 }
 
-.settingButton.submit {
+.settingButton.diabled {
+    background: #ADAEAF;
+    pointer-events: none;
+}
+
+.settingButton.submit,
+.settingButton.add {
     float: right;
     margin-left: 0;
 }
 
-.settingButton.cancel {
+.settingButton.cancel,
+.settingButton.leave {
     float: left;
     margin-right: 0;
+}
+
+.settingButton.image {
+    margin: .4em 6em;
+    flex-grow: 1;
 }
 
 @-webkit-keyframes shock {
