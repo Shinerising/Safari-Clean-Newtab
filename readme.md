@@ -1,6 +1,6 @@
 # Blured Newtab Page for Safari and Chrome
 
-> See Demo at https://apollo.alice.expert/New-blured-Homepage/
+> See Demo at https://apollowayne.me/New-blured-Homepage/
 
 ![Webpage Preview](./Images/preview.jpg)
 
