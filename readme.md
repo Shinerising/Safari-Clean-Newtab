@@ -12,6 +12,8 @@
 
 - Change The Background Wallpaper Automatically
 
+- Set Your Favorite Website Icons Easily
+
 - You Can Use Your Awesome Images As Well!
 
 ## Usage
@@ -33,6 +35,8 @@ To enable quick option panel, you must disable Local File Restrictions (Safari O
 Then you could refresh the page and click the gear icon at right bottom side to open option panel like this:
 
 <img src="./Images/option.jpg" width="400">
+
+To modify icons of quick visit websites, move your mouse cursor above the bottom bar and press <kbd>command</kbd> or <kbd>control</kbd>, then you'll know what to do next;
 
 ## Option Items
 
@@ -65,6 +69,8 @@ Enter the image keywords which could be used to search wallpapers from image lib
 ## API Statement
 
 This project uses the image search and storage API from https://unsplash.com , which is a perfect Hi-res image sharing website. Please visit https://unsplash.com/developers for more details.
+
+This project uses the iTunes search API from https://itunes.apple.com to fetch icon images. Please visit https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/ for more details.
 
 ## Donation
 
