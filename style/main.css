@@ -167,6 +167,18 @@ input {
     transition: opacity .3s, transform .3s, width .2s, padding .2s;
 }
 
+.siteButton.dragging {
+    z-index: 100;
+}
+
+.siteButton.moveLeft {
+    transform: translateX(-5em);
+}
+
+.siteButton.moveRight {
+    transform: translateX(5em);
+}
+
 .siteButton.add,
 .siteButton.hide {
     pointer-events: none;

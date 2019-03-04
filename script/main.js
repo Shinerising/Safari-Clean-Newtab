@@ -84,22 +84,7 @@ $(document).ready(() => {
         element.img = $("[data-key='shortcutImage']").val();
         let node = $(`<a href="${element.link}" class="siteButton"><i></i><img src="${element.img}" class="siteIcon">
                     <div class="siteTitle">${element.title}</div></a>`);
-        node.click((e) => {
-            if (e.target.nodeName == "I") {
-                let index = $(e.currentTarget).index(".siteButton:not(.hide)");
-                window.config.shortcuts = window.config.shortcuts.filter((element, idx) => {
-                    return idx != index;
-                });
-                if (storageEnabled) {
-                    localStorage.setItem("config", JSON.stringify(window.config));
-                }
-                $(e.currentTarget).addClass("hide");
-                e.preventDefault();
-            } else {
-                $(".siteButton").removeClass("click");
-                $(this).addClass("click");
-            }
-        });
+        addListener(node);
         node.addClass("hide");
         node.insertBefore(".siteButton.add");
         window.requestAnimationFrame(() => {
@@ -170,30 +155,7 @@ $(document).ready(() => {
                         <div class="siteTitle">Add Shortcut</div></a>`);
     }
 
-    $(".siteButton").click((e) => {
-        if (e.target.nodeName == "I") {
-            let index = $(e.currentTarget).index(".siteButton:not(.hide)");
-            window.config.shortcuts = window.config.shortcuts.filter((element, idx) => {
-                return idx != index;
-            });
-            if (storageEnabled) {
-                localStorage.setItem("config", JSON.stringify(window.config));
-            }
-            $(e.currentTarget).addClass("hide");
-            e.preventDefault();
-        } else if ($(e.currentTarget).hasClass("add")) {
-            $("[data-key='shortcutTitle']").val("");
-            $("[data-key='shortcutLink']").val("");
-            $("[data-key='shortcutImage']").val("");
-            $(".settingItem.full.image").empty();
-            $(".settingPanel.config").removeClass("show");
-            $(".settingPanel.shortcut").toggleClass("show");
-            e.preventDefault();
-        } else {
-            $(".siteButton").removeClass("click");
-            $(this).addClass("click");
-        }
-    });
+    addListener($(".siteButton"));
 
     $("[data-key='local']").val(window.config.local.toString());
     $("[data-key='count']").val(window.config.count);
@@ -288,6 +250,109 @@ $(document).ready(() => {
         };
     }
 });
+
+let addListener = (node) => {
+    node.on("click", clickListener)
+        .on("mousedown", (e) => {
+            let $obj = $(e.currentTarget);
+            if ($obj.hasClass("add")) {
+                return;
+            } else if (!$("#sites").hasClass("editing")) {
+                return;
+            } else if (e.target.nodeName == "I") {
+                return;
+            }
+            $obj.addClass("dragging");
+            var drg_h = $obj.outerHeight(),
+                drg_w = $obj.outerWidth(),
+                pos_y = $obj.offset().top + drg_h - e.pageY,
+                pos_x = $obj.offset().left + drg_w - e.pageX;
+            $obj.parents().on("mousemove", (e) => {
+                let idx = $obj.index(".siteButton:not(.add)");
+                let top = e.pageY + pos_y - drg_h;
+                let left = e.pageX + pos_x - drg_w;
+                $obj.offset({
+                    top: top,
+                    left: left
+                }).on("mouseup", () => {
+                    $obj.parents().off("mousemove");
+                });
+                $(".siteButton:not(.add)").each((i, ele) => {
+                    $ele = $(ele);
+                    if (i < idx && $ele.offset().left > left) {
+                        $ele.addClass("moveRight");
+                    } else if (i > idx && $ele.offset().left < left) {
+                        $ele.addClass("moveLeft");
+                    } else {
+                        $ele.removeClass("moveLeft moveRight");
+                    }
+                });
+            });
+            e.preventDefault();
+        }).on("mouseup", (e) => {
+            let $obj = $(e.currentTarget);
+            if ($obj.hasClass("add")) {
+                return;
+            } else if (!$("#sites").hasClass("editing")) {
+                return;
+            } else if (e.target.nodeName == "I") {
+                return;
+            }
+
+            $obj.removeClass("dragging");
+            $obj.parents().off("mousemove");
+
+            let idx = $obj.index(".siteButton:not(.add)");
+            let offset = $(".siteButton.moveLeft").length - $(".siteButton.moveRight").length;
+            let element = window.config.shortcuts[idx];
+            window.config.shortcuts.splice(idx, 1);
+            window.config.shortcuts.splice(idx + offset, 0, element);
+
+            if (storageEnabled) {
+                localStorage.setItem("config", JSON.stringify(window.config));
+            }
+
+            let parent = $("#sites");
+            parent.empty();
+            window.config.shortcuts.map((element) => {
+                let template = `<a href="${element.link}" class="siteButton"><i></i><img src="${element.img}" class="siteIcon">
+                        <div class="siteTitle">${element.title}</div></a>`;
+                parent.append(template);
+            });
+            parent.append(`<a href="#AddShortcut" class="siteButton add"><div class="siteIcon"></div>
+                        <div class="siteTitle">Add Shortcut</div></a>`);
+
+            addListener($(".siteButton"));
+
+            e.preventDefault();
+        });
+}
+
+let clickListener = (e) => {
+    console.log(123);
+    if (e.target.nodeName == "I") {
+        let index = $(e.currentTarget).index(".siteButton:not(.hide)");
+        window.config.shortcuts = window.config.shortcuts.filter((element, idx) => {
+            return idx != index;
+        });
+        if (storageEnabled) {
+            localStorage.setItem("config", JSON.stringify(window.config));
+        }
+        $(e.currentTarget).addClass("hide");
+        e.preventDefault();
+    } else if ($(e.currentTarget).hasClass("add")) {
+        $("[data-key='shortcutTitle']").val("");
+        $("[data-key='shortcutLink']").val("");
+        $("[data-key='shortcutImage']").val("");
+        $(".settingItem.full.image").empty();
+        $(".settingPanel.config").removeClass("show");
+        $(".settingPanel.shortcut").toggleClass("show");
+        e.preventDefault();
+    } else if (!$("#sites").hasClass("editing")) {
+        $(".siteButton").removeClass("click");
+        $(this).addClass("click");
+    }
+}
 
 let requestImage = (callback) => {
     let url = "https://api.unsplash.com/photos/random?client_id=691b20a234f612603711b9eabd89df4729a06478f16d7e89cd8526340897b18d&orientation=landscape";
