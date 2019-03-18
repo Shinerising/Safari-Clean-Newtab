@@ -38,6 +38,8 @@ Then you could refresh the page and click the gear icon at right bottom side to 
 
 To modify icons of quick visit websites, move your mouse cursor above the bottom bar and press <kbd>command</kbd> or <kbd>control</kbd>, then you'll know what to do next.
 
+> **Update: Now you can drag the icons to sort them in edit mode!**
+
 <img src="./Images/add.jpg" width="320">
 
 Type text in Shortcut Title box then click Search Icon button, you will get five recommend icons, click the image to enter the url automatically.
