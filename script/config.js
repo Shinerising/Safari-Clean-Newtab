@@ -3,12 +3,11 @@
 window.config = {
     "version": 2, // Config Version, modify it when you need to overwrite settings in local storage
 
-    "local": false, // Make it true if only local images used
+    "source": "unsplash", // Image Source, Select from unsplash, bing, or local
     "count": 10, // Local image count
     "search": "google", //Choose google or bing
     "history": false, // Save search history or not
 
-    "api": "unsplash", // Don't change it
     "size": "regular", // Change it to raw, full, regular, small
     "keyword": "Sakura", // Change it to cat, soccer, flower, etc. Or make it false to load random image
 

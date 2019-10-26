@@ -63,7 +63,7 @@ $(document).ready(() => {
     });
 
     $(".settingButton.submit").click(() => {
-        window.config.local = $("[data-key='local']").val() == "true";
+        window.config.source = $("[data-key='source']").val();
         window.config.count = $("[data-key='count']").val();
         window.config.search = $("[data-key='search']").val();
         window.config.history = $("[data-key='history']").val() == "true";
@@ -157,7 +157,7 @@ $(document).ready(() => {
 
     addListener($(".siteButton"));
 
-    $("[data-key='local']").val(window.config.local.toString());
+    $("[data-key='source']").val(window.config.source);
     $("[data-key='count']").val(window.config.count);
     $("[data-key='search']").val(window.config.search);
     $("[data-key='history']").val((window.config.history || false).toString());
@@ -167,24 +167,24 @@ $(document).ready(() => {
     if (window.config.search === "bing") {
         isGoogleEnabled = false;
     }
-    if (window.config.local) {
+    if (window.config.source === "local") {
         let id = Math.floor(Math.random() * window.config.count) + 1;
         showImage("background/" + (id < 10 ? "0" : "") + id + ".jpg");
     } else {
         if (storageEnabled && localStorage.getItem("imageInfo")) {
             let data = localStorage.getItem("imageInfo");
             data = JSON.parse(data);
-            if (data && data.urls) {
+            if (data && (data.urls || data.images)) {
                 showImage(data);
             }
             requestImage((data) => {
-                if (data && data.urls) {
+                if (data && (data.urls || data.images)) {
                     localStorage.setItem("imageInfo", JSON.stringify(data));
                 }
             });
         } else {
             requestImage((data) => {
-                if (data && data.urls) {
+                if (data && (data.urls || data.images)) {
                     showImage(data);
                     if (storageEnabled) {
                         localStorage.setItem("imageInfo", JSON.stringify(data));
@@ -355,25 +355,36 @@ let clickListener = (e) => {
 }
 
 let requestImage = (callback) => {
-    let url = "https://api.unsplash.com/photos/random?client_id=691b20a234f612603711b9eabd89df4729a06478f16d7e89cd8526340897b18d&orientation=landscape";
-    if (window.config.keyword) {
-        url += "&query=" + window.config.keyword
-    }
-    fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-            if (window.config.keyword && data && data.results && data.results.length) {
-                callback(data.results[0]);
-            } else {
+    if (window.config.source === "bing") {
+        let url = "https://www.bing.com/HPImageArchive.aspx?format=js&idx=" + Math.round(Math.random() * 10) + "&n=1";
+        fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
                 callback(data);
-            }
-        });
+            });
+    } else {
+        let url = "https://api.unsplash.com/photos/random?client_id=691b20a234f612603711b9eabd89df4729a06478f16d7e89cd8526340897b18d&orientation=landscape";
+        if (window.config.keyword) {
+            url += "&query=" + window.config.keyword
+        }
+        fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+                if (window.config.keyword && data && data.results && data.results.length) {
+                    callback(data.results[0]);
+                } else {
+                    callback(data);
+                }
+            });
+    }
 }
 
 let showImage = (data) => {
     let url = "";
     if (typeof (data) === "string") {
         url = data;
+    } else if (data.images !== undefined && data.images.length > 0) {
+        url = "https://bing.com" + data.images[0].url;
     } else if (window.config.size === "raw") {
         url = data.urls.raw;
     } else if (window.config.size === "full") {
@@ -393,6 +404,26 @@ let showImage = (data) => {
         $(".coverImage").fadeOut(500);
         img.load(() => {
             $(".coverImage").remove();
+            img.appendTo($("#cover")).hide().fadeIn(500);
+        });
+    } else if (data.images !== undefined && data.images.length > 0) {
+        let image = data.images[0];
+        $("#cover").css("background", "#D3CCE3");
+        let img = $("<img />", {
+            class: "coverImage",
+            src: url,
+            alt: "none"
+        });
+        $(".coverImage").fadeOut(500);
+        img.load(() => {
+            $(".coverImage").remove();
+            $("#imageLink").attr("href", image.copyrightlink);
+            $("#copyrightLink").attr("href", image.copyrightlink);
+            $("#copyrightLink").text(image.copyright.match(/[^\(\)]+(?=\))/g));
+            $("#model").text(image.title);
+            $("#authorLink").attr("href", "");
+            $("#authorLink").text("");
+            $("#infoText").show();
             img.appendTo($("#cover")).hide().fadeIn(500);
         });
     } else {
