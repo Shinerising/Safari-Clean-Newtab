@@ -601,3 +601,117 @@ input {
         margin: 40vh auto;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    #searchBar {
+        background: rgba(0, 0, 0, .5);
+        box-shadow: 0 0 .2em rgba(50, 50, 50, .1), 0 0 5em rgba(50, 50, 50, .1);
+    }
+
+    #searchBar:hover {
+        opacity: 1;
+        background: rgba(0, 0, 0, .8);
+    }
+
+    #textInputIcon,
+    #settingIcon {
+        filter: invert();
+    }
+
+    #textInput {
+        color: #CFD8DC;
+    }
+
+    #textInput::placeholder {
+        color: whitesmoke;
+    }
+
+    #bottomBar {
+        background: rgba(0, 0, 0, .6);
+        box-shadow: 0 0 .2em rgba(50, 50, 50, .1), 0 0 5em rgba(50, 50, 50, .1);
+    }
+
+    .siteIcon {
+        box-shadow: 0 0 .1em rgba(255, 255, 255, .3);
+    }
+
+    .siteButton.add > .siteIcon {
+        background: rgba(0, 0, 0, .6);
+    }
+
+    .siteButton.add > .siteIcon::before {
+        color: #E0E0E0;
+    }
+
+    .siteButton > i {
+        color: #E0E0E0;
+        background: rgba(0, 0, 0, .8);
+    }
+
+    .siteButton > i:hover {
+        background: rgba(150, 150, 150, .8);
+    }
+
+    #infoText {
+        text-shadow: 0 0 .2em rgba(255, 255, 255, 1);
+        color: #212121;
+    }
+
+    a {
+        color: #212121;
+    }
+
+    .settingPanel {
+        color: #B0BEC5;
+        box-shadow: 0 0 .2em rgba(255, 255, 255, .1), 0 0 5em rgba(255, 255, 255, .1);
+        background: #424242;
+    }
+
+    .settingItem > div > input,
+    .settingItem > div > select {
+        border: 1px solid #546E7A;
+        background: #616161;
+        color: #ECEFF1;
+    }
+
+    .settingItem > div > i {
+        color: #ECEFF1;
+    }
+
+
+    .settingItem > div > input:focus,
+    .settingItem > div > select:focus {
+        border-color: #78909C;
+    }
+
+    .settingFooter {
+        background: rgba(0, 0, 0, .5);
+    }
+
+    .settingButton {
+        color: #CFD8DC;
+        box-shadow: 0 0 1px #AAA, 0 -1px 1px #888;
+        background: #757575;
+    }
+
+    .settingButton:hover {
+        box-shadow: 0 0 1px #CCC, 0 -1px 1px #AAA;
+    }
+
+    .settingButton:active {
+        background: #212121;
+        box-shadow: 0 0 1px #888, 0 1px 1px #666;
+    }
+
+    .settingButton.disabled {
+        background: #616161;
+    }
+
+    .settingClose {
+        background: transparent;
+    }
+
+    .settingClose:hover {
+        background: #212121;
+    }
+}
