@@ -1,4 +1,4 @@
-# Blured Newtab Page for Safari and Chrome
+# Clean Newtab Page for Safari and Chrome
 
 > See Demo at https://apollowayne.me/New-blured-Homepage/
 
