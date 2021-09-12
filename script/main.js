@@ -82,7 +82,7 @@ $(document).ready(() => {
         element.title = $("[data-key='shortcutTitle']").val();
         element.link = $("[data-key='shortcutLink']").val();
         element.img = $("[data-key='shortcutImage']").val();
-        let node = $(`<a href="${element.link}" class="siteButton"><i></i><img src="${element.img}" class="siteIcon">
+        let node = $(`<a href="${element.link}" title="${element.title}" class="siteButton"><i></i><img src="${element.img}" class="siteIcon">
                     <div class="siteTitle">${element.title}</div></a>`);
         addListener(node);
         node.addClass("hide");
@@ -147,11 +147,11 @@ $(document).ready(() => {
     if (window.config.shortcuts) {
         let parent = $("#sites");
         window.config.shortcuts.map((element) => {
-            let template = `<a href="${element.link}" class="siteButton"><i></i><img src="${element.img}" class="siteIcon">
+            let template = `<a href="${element.link}" title="${element.title}" class="siteButton"><i></i><img src="${element.img}" class="siteIcon">
                         <div class="siteTitle">${element.title}</div></a>`;
             parent.append(template);
         });
-        parent.append(`<a href="#AddShortcut" class="siteButton add"><div class="siteIcon"></div>
+        parent.append(`<a href="#AddShortcut" title="Add Shortcut" class="siteButton add"><div class="siteIcon"></div>
                         <div class="siteTitle">Add Shortcut</div></a>`);
     }
 
@@ -315,11 +315,11 @@ let addListener = (node) => {
             let parent = $("#sites");
             parent.empty();
             window.config.shortcuts.map((element) => {
-                let template = `<a href="${element.link}" class="siteButton"><i></i><img src="${element.img}" class="siteIcon">
+                let template = `<a href="${element.link}" title="${element.title}" class="siteButton"><i></i><img src="${element.img}" class="siteIcon">
                         <div class="siteTitle">${element.title}</div></a>`;
                 parent.append(template);
             });
-            parent.append(`<a href="#AddShortcut" class="siteButton add"><div class="siteIcon"></div>
+            parent.append(`<a href="#AddShortcut" title="Add Shortcut" class="siteButton add"><div class="siteIcon"></div>
                         <div class="siteTitle">Add Shortcut</div></a>`);
 
             addListener($(".siteButton"));
@@ -329,7 +329,6 @@ let addListener = (node) => {
 }
 
 let clickListener = (e) => {
-    console.log(123);
     if (e.target.nodeName == "I") {
         let index = $(e.currentTarget).index(".siteButton:not(.hide)");
         window.config.shortcuts = window.config.shortcuts.filter((element, idx) => {
