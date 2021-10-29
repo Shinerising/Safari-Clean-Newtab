@@ -1,6 +1,6 @@
 # Clean Newtab Page for Safari and Chrome
 
-> See Demo at https://apollowayne.me/New-blured-Homepage/
+> See Demo at http://safari.awayne.me/
 
 ![Webpage Preview](./Images/preview.jpg)
 
