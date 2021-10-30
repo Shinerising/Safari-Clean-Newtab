@@ -427,6 +427,7 @@ let showImage = (data) => {
         });
     } else {
         $("#cover").css("background", data.color);
+        document.querySelector("meta[name='theme-color']").content=data.color;
         let img = $("<img />", {
             class: "coverImage",
             src: url,
