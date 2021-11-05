@@ -12,7 +12,7 @@
     "lint": "eslint src/*.ts",
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production", 
-    "copy": "mkdir -p public && rm -rf public/* && cp -r dist style icons images public && cp index.html favicon.ico CNAME site.webmanifest public",
+    "copy": "mkdir -p public && rm -rf public/* && cp -r dist style icons public && cp index.html favicon.ico CNAME site.webmanifest public",
     "deploy": "npm run build && npm run copy"
   },
   "devDependencies": {
