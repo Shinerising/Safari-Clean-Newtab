@@ -15,6 +15,7 @@ export class Util {
     };
   }
   public static isURL(query: string) {
+    // eslint-disable-next-line
     const urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}(:[0-9]{1,5})?(\/.*)?$/ig;
     return query.length < 2083 && urlRegex.test(query);
   }

@@ -9,6 +9,7 @@
   "scripts": {
     "ts-dev": "tsc -w",
     "ts-build": "tsc",
+    "lint": "eslint src/*.ts",
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production"
   },

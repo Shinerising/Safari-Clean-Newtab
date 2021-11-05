@@ -255,7 +255,7 @@ export class App {
       }
     });
 
-    let observer = new ResizeObserver(entries => {
+    const observer = new ResizeObserver(entries => {
       for (const entry of entries) {
         if (entry.target == DOM.bottomBar) {
           const width = entry.contentRect.width / entry.contentRect.height * 200;
