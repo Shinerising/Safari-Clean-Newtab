@@ -33,6 +33,13 @@ input {
 
 .coverImage {
     object-fit: cover;
+    transition: opacity .5s;
+    opacity: 0;
+}
+
+.coverImage.show {
+    object-fit: cover;
+    opacity: 1;
 }
 
 #cover > .coverImage {
@@ -53,18 +60,32 @@ input {
     max-width: 30em;
     width: 80vw;
     height: 3.2em;
-    margin: 15em auto;
+    margin: 36vh auto;
     position: relative;
-    border-radius: 1em;
-    background: rgba(255, 255, 255, .6);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
     opacity: .8;
-    transition: 0.5s opacity, 0.5s background;
+    transition: 0.5s opacity;
+}
+
+#searchBar > .backglass {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, .6);
+    mask: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg"><path d="M 100 0 c -90 0 -100 10 -100 100 c 0 90 10 100 100 100 l 600 0 c 90 0, 100 -10, 100 -100 c 0 -90, -10 -100, -100 -100Z" fill="white"></path></svg>');
+    mask-size: 100% 100%;
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg"><path d="M 100 0 c -90 0 -100 10 -100 100 c 0 90 10 100 100 100 l 600 0 c 90 0, 100 -10, 100 -100 c 0 -90, -10 -100, -100 -100Z" fill="white"></path></svg>');
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    transition: 0.5s background;
 }
 
 #searchBar:hover {
     opacity: 1;
+}
+
+#searchBar:hover > .backglass {
     background: rgba(255, 255, 255, .9);
 }
 
@@ -74,10 +95,10 @@ input {
 
 #textInputIcon {
     position: absolute;
-    top: .8em;
-    left: .8em;
-    width: 1.7em;
-    height: 1.8em;
+    top: .9em;
+    left: .9em;
+    width: 1.5em;
+    height: 1.5em;
     background: url(../icons/search.svg) no-repeat;
 }
 
@@ -130,13 +151,24 @@ input {
     position: relative;
     z-index: 24;
     width: auto;
+    min-width: 6em;
     height: 4em;
     padding: 1em .5em;
+    animation: flyBottom 1.1s .5s ease-in-out both;
+}
+
+#bottomBar > .backglass {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(255, 255, 255, .6);
-    border-radius: 1.35em;
-    box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
+    mask: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg"><path d="M 100 0 c -90 0 -100 10 -100 100 c 0 90 10 100 100 100 l 600 0 c 90 0, 100 -10, 100 -100 c 0 -90, -10 -100, -100 -100Z" fill="white"></path></svg>');
+    mask-size: 100% 100%;
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg"><path d="M 100 0 c -90 0 -100 10 -100 100 c 0 90 10 100 100 100 l 600 0 c 90 0, 100 -10, 100 -100 c 0 -90, -10 -100, -100 -100Z" fill="white"></path></svg>');
     -webkit-backdrop-filter: saturate(180%) blur(20px);
-    -webkit-animation: flyBottom .7s .5s both;
 }
 
 #sites {
@@ -167,7 +199,7 @@ input {
     padding: 0 .5em;
     display: inline-block;
     text-align: center;
-    transition: opacity .3s, transform .3s, width .2s, padding .2s;
+    transition: opacity .3s, transform .3s, width .2s, padding .2s, filter .3s;
 }
 
 .siteButton.dragging {
@@ -231,17 +263,49 @@ input {
     background: rgba(55, 55, 55, .8);
 }
 
-.siteIcon {
+.siteButton::before, .siteButton::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+}
+
+.siteButton::after {
+    left: .5rem;
+    top: 0;
     width: 4em;
     height: 4em;
-    border-radius: 22.5%;
+    mask: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><path d="M37.0828183,120 C23.473424,120 15.6489493,120 7.82447466,112.175525 C-4.66529593e-08,104.351051 0,96.526576 0,82.9171817 L0,37.0828183 C0,23.473424 -4.66529593e-08,15.6489493 7.82447466,7.82447466 C15.6489493,0 23.473424,0 37.0828183,0 L82.9171817,0 C96.526576,0 104.351051,0 112.175525,7.82447466 C120,15.6489493 120,23.473424 120,37.0828183 L120,82.9171817 C120,96.526576 120,104.351051 112.175525,112.175525 C104.351051,120 96.526576,120 82.9171817,120 L37.0828183,120 Z M37.0828183,120" fill="white"></path></svg>');
+    mask-size: 100% 100%;
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><path d="M37.0828183,120 C23.473424,120 15.6489493,120 7.82447466,112.175525 C-4.66529593e-08,104.351051 0,96.526576 0,82.9171817 L0,37.0828183 C0,23.473424 -4.66529593e-08,15.6489493 7.82447466,7.82447466 C15.6489493,0 23.473424,0 37.0828183,0 L82.9171817,0 C96.526576,0 104.351051,0 112.175525,7.82447466 C120,15.6489493 120,23.473424 120,37.0828183 L120,82.9171817 C120,96.526576 120,104.351051 112.175525,112.175525 C104.351051,120 96.526576,120 82.9171817,120 L37.0828183,120 Z M37.0828183,120" fill="white"></path></svg>');
+    background-image: linear-gradient(to bottom, rgba(255,255,255,.1), rgba(255,255,255,.15) 40%, rgba(255,255,255,.05) 80%, rgba(0,0,0,.1));
+}
+
+.siteButton::before {
+    left: .6rem;
+    top: .1;
+    width: 3.8em;
+    height: 3.8em;
+    background-size: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><path d="M37.0828183,120 C23.473424,120 15.6489493,120 7.82447466,112.175525 C-4.66529593e-08,104.351051 0,96.526576 0,82.9171817 L0,37.0828183 C0,23.473424 -4.66529593e-08,15.6489493 7.82447466,7.82447466 C15.6489493,0 23.473424,0 37.0828183,0 L82.9171817,0 C96.526576,0 104.351051,0 112.175525,7.82447466 C120,15.6489493 120,23.473424 120,37.0828183 L120,82.9171817 C120,96.526576 120,104.351051 112.175525,112.175525 C104.351051,120 96.526576,120 82.9171817,120 L37.0828183,120 Z M37.0828183,120" fill="white"></path></svg>');
+    filter: drop-shadow(0 .1em .1em rgba(0,0,0,0.15));
+    -webkit-filter: drop-shadow(0 .2em .25em rgba(0,0,0,0.2));
+}
+
+.siteButton:hover {
+    filter: brightness(.8);
+}
+
+.siteIcon {
+    position: relative;
+    width: 4em;
+    height: 4em;
+    border-radius: 0;
     box-shadow: 0 0 .1em rgba(0, 0, 0, .3);
     display: inline-block;
     transition: filter .3s;
-}
-
-.siteIcon:hover {
-    filter: brightness(.6);
+    mask: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><path d="M37.0828183,120 C23.473424,120 15.6489493,120 7.82447466,112.175525 C-4.66529593e-08,104.351051 0,96.526576 0,82.9171817 L0,37.0828183 C0,23.473424 -4.66529593e-08,15.6489493 7.82447466,7.82447466 C15.6489493,0 23.473424,0 37.0828183,0 L82.9171817,0 C96.526576,0 104.351051,0 112.175525,7.82447466 C120,15.6489493 120,23.473424 120,37.0828183 L120,82.9171817 C120,96.526576 120,104.351051 112.175525,112.175525 C104.351051,120 96.526576,120 82.9171817,120 L37.0828183,120 Z M37.0828183,120" fill="white"></path></svg>');
+    mask-size: 100% 100%;
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><path d="M37.0828183,120 C23.473424,120 15.6489493,120 7.82447466,112.175525 C-4.66529593e-08,104.351051 0,96.526576 0,82.9171817 L0,37.0828183 C0,23.473424 -4.66529593e-08,15.6489493 7.82447466,7.82447466 C15.6489493,0 23.473424,0 37.0828183,0 L82.9171817,0 C96.526576,0 104.351051,0 112.175525,7.82447466 C120,15.6489493 120,23.473424 120,37.0828183 L120,82.9171817 C120,96.526576 120,104.351051 112.175525,112.175525 C104.351051,120 96.526576,120 82.9171817,120 L37.0828183,120 Z M37.0828183,120" fill="white"></path></svg>');
 }
 
 .siteTitle {
@@ -279,7 +343,7 @@ input {
 
 #infoText {
     position: absolute;
-    width: 15em;
+    width: 25em;
     left: 2em;
     bottom: 0;
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -299,7 +363,6 @@ input {
 }
 
 #imageLink:hover,
-#copyrightLink:hover,
 #authorLink:hover {
     text-decoration: underline;
 }
@@ -324,21 +387,23 @@ input {
     overflow: hidden;
     box-shadow: 0 0 .2em rgba(0, 0, 0, .1), 0 0 5em rgba(0, 0, 0, .1);
     background: #FFFFFF;
-    transform: translateY(10em) scale(.6);
+    transform: translateY(10em) scale(.1);
+    transform-origin: calc(50vw + 12em) 50vh;
     opacity: 0;
     pointer-events: none;
-    transition: opacity .3s, transform .3s;
+    transition: opacity .5s ease-in-out, transform .5s ease-in-out;
 }
 
 .settingPanel.shortcut {
     left: auto;
     width: 18em;
-    right: -7em;
+    right: -6em;
     top: auto;
     bottom: 8em;
     height: auto;
     overflow: visible;
     transform: translateY(12em) scale(.2);
+    transform-origin: center;
 }
 
 .settingPanel.shortcut::after {
@@ -562,11 +627,15 @@ input {
 }
 
 @-webkit-keyframes flyBottom {
-    from {
-        transform: translateY(8em);
+    0% {
+        transform: translateY(8em) scale(1.1, 1.1);
     }
 
-    to {
+    65% {
+        transform: translateY(-.1em) scale(.99, .99);
+    }
+
+    100% {
         transform: translateY(0);
     }
 }
@@ -578,6 +647,12 @@ input {
 
     to {
         opacity: .5;
+    }
+}
+
+@media only screen and (max-width: 1600px) {
+    #infoText {
+        width: 15em;
     }
 }
 
@@ -606,14 +681,12 @@ input {
 }
 
 @media (prefers-color-scheme: dark) {
-    #searchBar {
-        background: rgba(0, 0, 0, .5);
-        box-shadow: 0 0 .2em rgba(50, 50, 50, .1), 0 0 5em rgba(50, 50, 50, .1);
+    #searchBar > .backglass {
+            background: rgba(0, 0, 0, .5);
     }
 
-    #searchBar:hover {
-        opacity: 1;
-        background: rgba(0, 0, 0, .8);
+    #searchBar:hover > .backglass {
+            background: rgba(0, 0, 0, .8);
     }
 
     #textInputIcon,
@@ -629,9 +702,9 @@ input {
         color: whitesmoke;
     }
 
-    #bottomBar {
+
+    #bottomBar > .backglass{
         background: rgba(0, 0, 0, .6);
-        box-shadow: 0 0 .2em rgba(50, 50, 50, .1), 0 0 5em rgba(50, 50, 50, .1);
     }
 
     .siteIcon {
@@ -655,6 +728,10 @@ input {
         background: rgba(150, 150, 150, .8);
     }
 
+    .siteButton::before {
+        background-image: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><path d="M37.0828183,120 C23.473424,120 15.6489493,120 7.82447466,112.175525 C-4.66529593e-08,104.351051 0,96.526576 0,82.9171817 L0,37.0828183 C0,23.473424 -4.66529593e-08,15.6489493 7.82447466,7.82447466 C15.6489493,0 23.473424,0 37.0828183,0 L82.9171817,0 C96.526576,0 104.351051,0 112.175525,7.82447466 C120,15.6489493 120,23.473424 120,37.0828183 L120,82.9171817 C120,96.526576 120,104.351051 112.175525,112.175525 C104.351051,120 96.526576,120 82.9171817,120 L37.0828183,120 Z M37.0828183,120" fill="black"></path></svg>');
+    }
+
     #infoText {
         text-shadow: 0 0 .2em rgba(255, 255, 255, 1);
         color: #212121;
@@ -668,6 +745,10 @@ input {
         color: #B0BEC5;
         box-shadow: 0 0 .2em rgba(255, 255, 255, .1), 0 0 5em rgba(255, 255, 255, .1);
         background: #424242;
+    }
+
+    .settingPanel.shortcut::after {
+        border-top-color: #424242;
     }
 
     .settingItem > div > input,

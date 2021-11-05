@@ -1,16 +1,15 @@
-/* eslint-env es6*/
+import {Config, ImageSource, ImageSize, SearchEngine} from './app.class';
 
-window.config = {
-  'version': 2, // Config Version, modify it when you need to overwrite settings in local storage
+export const DefaultConfig : Config = {
+  'version': 2,
 
-  'source': 'unsplash', // Image Source, Select from unsplash, bing, or local
-  'count': 10, // Local image count
-  'search': 'google', // Choose google or bing
-  'history': false, // Save search history or not
+  'source': ImageSource.unsplash,
+  'count': 10,
+  'search': SearchEngine.google,
+  'history': false,
 
-  'size': 'regular', // Change it to raw, full, regular, small
-  'keyword': 'Sakura', // Change it to cat, soccer, flower, etc. Or make it false to load random image
-
+  'size': ImageSize.regular,
+  'keyword': 'Sakura',
   'shortcuts': [
     {
       'title': 'Google',
