@@ -7,7 +7,7 @@ module.exports = {
     new GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
-      exclude: [/\.DS*/, /^.*ico$/, /^.*svg$/, /^.*jpg$/, /^.*png$/],
+      exclude: [/\.DS*/, /^.*ico$/, /^.*svg$/, /^.*jpg$/, /^.*png$/, 'CNAME'],
     }),
     new CopyPlugin({
       patterns: [
