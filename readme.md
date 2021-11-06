@@ -1,8 +1,8 @@
 # Clean Newtab Page for Safari and Chrome
 
-> See Demo at http://safari.awayne.me/
+> See Demo at https://safari.awayne.me/
 
-![Webpage Preview](./Images/preview.jpg)
+![Webpage Preview](./image/preview.jpg)
 
 ## Features
 
@@ -20,7 +20,7 @@
 
 Download this repo, then set your homepage of browser to the local repo folder as below:
 
-![Browser Setting Panel](./Images/setting.jpg)
+![Browser Setting Panel](./image/setting.jpg)
 
 ## Custom Options
 
@@ -34,13 +34,13 @@ To enable quick option panel, you must disable Local File Restrictions (Safari O
 
 Then you could refresh the page and click the gear icon at right bottom side to open option panel like this:
 
-<img src="./Images/option.jpg" width="400">
+<img src="./image/option.jpg" width="400">
 
 To modify icons of quick visit websites, move your mouse cursor above the bottom bar and press <kbd>command</kbd> or <kbd>control</kbd>, then you'll know what to do next.
 
 > **Update: Now you can drag the icons to sort them in edit mode!**
 
-<img src="./Images/add.jpg" width="320">
+<img src="./image/add.jpg" width="320">
 
 Type text in Shortcut Title box then click Search Icon button, you will get five recommend icons, click the image to enter the url automatically.
 
