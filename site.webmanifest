@@ -1,6 +1,7 @@
 {
     "name": "Safari NewTab",
     "short_name": "newtab",
+    "start_url": "https://safari.awayne.me",
     "icons":
     [
         {
@@ -16,5 +17,6 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "display": "standalone",
+    "orientation": "landscape"
 }
