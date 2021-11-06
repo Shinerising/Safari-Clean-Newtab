@@ -1,6 +1,20 @@
+const { GenerateSW } = require('workbox-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   entry: "./index.ts",
-  plugins: [],
+  plugins: [
+    new GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      exclude: [/\.DS*/],
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: "assets", to: "" }
+      ],
+    })
+  ],
   module: {
     rules: [
       {

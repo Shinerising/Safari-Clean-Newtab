@@ -224,12 +224,12 @@ input {
 }
 
 .siteButton.add > .siteIcon {
-    background: rgba(255, 255, 255, .6);
+    background: rgba(135, 135, 155, 1);
 }
 
 .siteButton.add > .siteIcon::before {
     content: "+";
-    color: #898989;
+    color: #DEDEFF;
     font-size: 2.5em;
     line-height: 1.5;
 }
@@ -282,13 +282,13 @@ input {
 
 .siteButton::before {
     left: .6rem;
-    top: .1;
+    top: .1rem;
     width: 3.8em;
     height: 3.8em;
     background-size: 100%;
     background-image: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><path d="M37.0828183,120 C23.473424,120 15.6489493,120 7.82447466,112.175525 C-4.66529593e-08,104.351051 0,96.526576 0,82.9171817 L0,37.0828183 C0,23.473424 -4.66529593e-08,15.6489493 7.82447466,7.82447466 C15.6489493,0 23.473424,0 37.0828183,0 L82.9171817,0 C96.526576,0 104.351051,0 112.175525,7.82447466 C120,15.6489493 120,23.473424 120,37.0828183 L120,82.9171817 C120,96.526576 120,104.351051 112.175525,112.175525 C104.351051,120 96.526576,120 82.9171817,120 L37.0828183,120 Z M37.0828183,120" fill="white"></path></svg>');
-    filter: drop-shadow(0 .1em .1em rgba(0,0,0,0.15));
-    -webkit-filter: drop-shadow(0 .2em .25em rgba(0,0,0,0.2));
+    filter: drop-shadow(0 .1em .2em rgba(0,0,0,0.2));
+    -webkit-filter: drop-shadow(0 .1em .2em rgba(0,0,0,0.2));
 }
 
 .siteButton:hover {
@@ -372,6 +372,7 @@ input {
 }
 
 .settingPanel {
+    opacity: 0;
     position: absolute;
     left: 0;
     right: 0;
@@ -389,7 +390,6 @@ input {
     background: #FFFFFF;
     transform: translateY(10em) scale(.1);
     transform-origin: calc(50vw + 12em) 50vh;
-    opacity: 0;
     pointer-events: none;
     transition: opacity .5s ease-in-out, transform .5s ease-in-out;
 }
@@ -404,6 +404,7 @@ input {
     overflow: visible;
     transform: translateY(12em) scale(.2);
     transform-origin: center;
+    transition: opacity .3s ease-in-out, transform .3s ease-in-out;
 }
 
 .settingPanel.shortcut::after {
@@ -712,7 +713,7 @@ input {
     }
 
     .siteButton.add > .siteIcon {
-        background: rgba(0, 0, 0, .6);
+        background: rgba(50, 50, 75, 1);
     }
 
     .siteButton.add > .siteIcon::before {

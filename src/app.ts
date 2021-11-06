@@ -35,6 +35,12 @@ export class App {
   public async start() {
     await this.waitDocumentReady();
 
+    try {
+      await this.registerServiceWorker();
+    } catch (e) {
+      console.error(e);
+    }
+
     Storage.initialize();
 
     QueryDB.initialize();
@@ -43,6 +49,7 @@ export class App {
 
     DOM.load();
     DOM.textBox.focus();
+    DOM.queryAll('.settingPanel').forEach(element => element.removeAttribute('hidden'));
 
     this.applyShortcuts();
 
@@ -51,6 +58,12 @@ export class App {
     this.initialSettings();
 
     await this.refreshWallpaper();
+  }
+
+  private async registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      await navigator.serviceWorker.register('service-worker.js');
+    }
   }
 
   private loadConfig() {

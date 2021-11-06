@@ -5,13 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>New Tab</title>
     <meta name="theme-color" content="#D3CCE3">
-    <link rel="prefetch" as="script" href="dist/main.js">
     <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="style/main.css">
-    <script type="text/javascript" src="dist/main.js" async></script>
+    <script type="text/javascript" src="main.js" async></script>
 </head>
 
 <body>
@@ -27,7 +26,7 @@
         <div id="bottomBar">
             <div class="backglass"></div>
             <div id="sites"></div>
-            <div class="settingPanel shortcut">
+            <div class="settingPanel shortcut" hidden>
                 <div class="settingHeader">
                     <div class="settingTitle">Add Shortcut</div>
                 </div>
@@ -76,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div id="settingPanel" class="settingPanel config">
+    <div id="settingPanel" class="settingPanel config" hidden>
         <div class="settingHeader">
             <div id="settingClose" class="settingClose">✖︎</div>
             <div class="settingTitle">Setting Panel</div>
