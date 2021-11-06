@@ -22,7 +22,9 @@ HTMLElement.prototype.toggleClass = function(className: string) {
   }
 };
 HTMLElement.prototype.val = function(value?: string) {
-  if (value) {
+  if (value === '') {
+    (<HTMLInputElement>this).value = '';
+  } else if (value) {
     (<HTMLInputElement>this).value = value;
   }
   return (<HTMLInputElement>this).value;
@@ -34,12 +36,6 @@ export class App {
 
   public async start() {
     await this.waitDocumentReady();
-
-    try {
-      await this.registerServiceWorker();
-    } catch (e) {
-      console.error(e);
-    }
 
     Storage.initialize();
 
@@ -58,6 +54,12 @@ export class App {
     this.initialSettings();
 
     await this.refreshWallpaper();
+
+    try {
+      await this.registerServiceWorker();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   private async registerServiceWorker() {
@@ -211,10 +213,17 @@ export class App {
       });
       this.currentConfig.shortcuts.push(shortcut);
       Storage.setItem('config', this.currentConfig);
+
+      DOM.query('[data-key=\'shortcutTitle\']').val('');
+      DOM.query('[data-key=\'shortcutLink\']').val('');
+      DOM.query('[data-key=\'shortcutImage\']').val('');
       DOM.query('.settingPanel.shortcut').removeClass('show');
     });
 
     DOM.query('.settingButton.leave').addEventListener('click', () => {
+      DOM.query('[data-key=\'shortcutTitle\']').val('');
+      DOM.query('[data-key=\'shortcutLink\']').val('');
+      DOM.query('[data-key=\'shortcutImage\']').val('');
       DOM.query('.settingPanel.shortcut').removeClass('show');
     });
 
