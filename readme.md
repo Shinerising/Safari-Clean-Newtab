@@ -1,5 +1,11 @@
 # Clean Newtab Page for Safari and Chrome
 
+![Safari](https://img.shields.io/badge/safari-3F7EE3?style=for-the-badge&logo=safari)
+![TypeScript](https://img.shields.io/badge/typescript-D8E4F7?style=for-the-badge&logo=typescript)
+![CSS](https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3)
+![Unsplash](https://img.shields.io/badge/unsplash-000000?style=for-the-badge&logo=unsplash)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FShinerising%2FSafari-Clean-Newtab%2Fbadge&style=for-the-badge)](https://actions-badge.atrox.dev/Shinerising/Safari-Clean-Newtab/goto)
+
 > See Demo at https://safari.awayne.me/
 
 ![Webpage Preview](./image/preview.jpg)
