@@ -1,5 +1,5 @@
 import { ImageSource, ImageSize, ImageInfo } from './app.class';
-import { UnsplashData, UnsplashResult, BingDailyImageResult, AppleSearchData } from './app.interface';  
+import { UnsplashData, UnsplashResult, BingDailyImageResult, AppleSearchData } from './app.interface';
 
 type debounceFunction = (...args: string[]) => void;
 export class Util {
@@ -156,11 +156,13 @@ export class ImageFetcher {
     }
     return new ImageInfo();
   }
-  private static resolveUnsplashData(data: UnsplashResult): ImageInfo {
+  private static resolveUnsplashData(data: UnsplashResult | UnsplashData): ImageInfo {
     const image = new ImageInfo();
-    let node:UnsplashData;
-    if (data && data.results && data.results.length) {
-      node = data.results[0];
+    let node: UnsplashData;
+    if (data && (<UnsplashResult>data).results && (<UnsplashResult>data).results.length) {
+      node = (<UnsplashResult>data).results[0];
+    } else if (data) {
+      node = data as UnsplashData;
     } else {
       return image;
     }
