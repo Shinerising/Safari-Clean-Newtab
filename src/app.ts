@@ -30,10 +30,18 @@ HTMLElement.prototype.val = function(value?: string) {
   return (<HTMLInputElement>this).value;
 };
 
-
+/**
+ * @class App
+ * @description The main class of the application.
+ * @author Apollo Wayne
+ * @version 1.0.0
+ */
 export class App {
   private currentConfig: Config = DefaultConfig;
 
+  /**
+   * Start the app
+   */
   public async start() {
     await this.waitDocumentReady();
 
@@ -51,7 +59,7 @@ export class App {
 
     this.addListener();
 
-    this.initialSettings();
+    this.initializeSettings();
 
     await this.refreshWallpaper();
 
@@ -62,12 +70,18 @@ export class App {
     }
   }
 
+  /**
+   * Register Service Worker
+   */
   private async registerServiceWorker() {
     if ('serviceWorker' in navigator) {
       await navigator.serviceWorker.register('service-worker.js');
     }
   }
 
+  /**
+   * Load config from local storage
+   */
   private loadConfig() {
     const config = Storage.getItem<Config>('config');
     if (config) {
@@ -77,6 +91,9 @@ export class App {
     }
   }
 
+  /**
+   * Refresh Wallpaper
+   */
   private async refreshWallpaper() {
     let image = Storage.getItem<ImageInfo>('imageinfo');
 
@@ -101,13 +118,16 @@ export class App {
     }
   }
 
+  /**
+   * Add listener to DOM
+   */
   private addListener() {
     DOM.textBox.addEventListener('keydown', async (e: KeyboardEvent) => {
       const element = e.target as HTMLInputElement;
-      const code = (e.keyCode ? e.keyCode : e.which);
-      element.setAttribute('lastkey', code.toString());
+      const key = e.key;
+      element.setAttribute('lastkey', key);
       const query = DOM.query("#textInput").val();
-      if (code == 13 && query) {
+      if (key == 'Enter' && query) {
         if (this.currentConfig.history) {
           await QueryDB.updateQuery(query.toLocaleLowerCase());
         }
@@ -165,13 +185,13 @@ export class App {
     });
 
     document.addEventListener('keydown', (e) => {
-      if ((e.which == 17 || e.which == 91) && DOM.siteBox.classList.contains('mousein')) {
+      if ((e.key == 'Meta' || e.key == 'Control') && DOM.siteBox.classList.contains('mousein')) {
         DOM.siteBox.addClass('editing');
       }
     });
 
     document.addEventListener('keyup', (e) => {
-      if ((e.which == 17 || e.which == 91)) {
+      if (e.key == 'Meta' || e.key == 'Control') {
         DOM.siteBox.removeClass('editing');
       }
     });
@@ -296,6 +316,10 @@ export class App {
     observer.observe(DOM.searchBar);
   }
 
+  /**
+   * Add listener for shortcut button
+   * @param node Element of shortcut
+   */
   private addShortcutListener(node: HTMLElement) {
     node.addEventListener('mousedown', (e: MouseEvent) => {
       e.preventDefault();
@@ -385,6 +409,9 @@ export class App {
     });
   }
 
+  /**
+   * Append shortcut buttons from config
+   */
   private applyShortcuts() {
     if (this.currentConfig) {
       let content = '';
@@ -409,7 +436,11 @@ export class App {
     }
   }
 
-  private waitDocumentReady() {
+  /**
+   * Wait for DOM ready
+   * @returns {Promise<void>}
+   */
+  private waitDocumentReady(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       if (document.readyState === 'complete' || document.readyState === 'interactive') {
         resolve(true);
@@ -423,7 +454,10 @@ export class App {
     });
   }
 
-  private initialSettings() {
+  /**
+   * Initialize settings
+   */
+  private initializeSettings() {
     DOM.query('[data-key=\'source\']').val(ImageSource[this.currentConfig.source]);
     DOM.query('[data-key=\'count\']').val(this.currentConfig.count.toString());
     DOM.query('[data-key=\'search\']').val(SearchEngine[this.currentConfig.search]);
