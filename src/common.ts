@@ -1,13 +1,15 @@
 import { ImageSource, ImageSize, ImageInfo } from './app.class';
+import { UnsplashData, UnsplashResult, BingDailyImageResult, AppleSearchData } from './app.interface';  
 
+type debounceFunction = (...args: string[]) => void;
 export class Util {
-  public static debounce(func: any, wait: number) {
-    let timeout: any;
+  public static debounce(fn: debounceFunction, wait: number) {
+    let timeout: NodeJS.Timeout;
 
-    return (...args: any[]) => {
+    return (...args: string[]) => {
       const later = () => {
-        clearTimeout(timeout);
-        func(...args);
+        clearTimeout;
+        fn(...args);
       };
 
       clearTimeout(timeout);
@@ -109,6 +111,9 @@ export class ImageFetcher {
       img.addEventListener('load', () => {
         resolve(img);
       });
+      img.addEventListener('error', (e) => {
+        reject(e);
+      });
     });
   }
   private static getUrl(image: ImageInfo, size: ImageSize): string | undefined {
@@ -143,21 +148,19 @@ export class ImageFetcher {
     }
   }
 
-  private static resolveData(source: ImageSource, data: any): ImageInfo {
+  private static resolveData(source: ImageSource, data: unknown): ImageInfo {
     if (source == ImageSource.unsplash) {
-      return this.resolveUnsplashData(data);
+      return this.resolveUnsplashData(data as UnsplashResult);
     } else if (source == ImageSource.bing) {
-      return this.resolveBingData(data);
+      return this.resolveBingData(data as BingDailyImageResult);
     }
     return new ImageInfo();
   }
-  private static resolveUnsplashData(data: any): ImageInfo {
+  private static resolveUnsplashData(data: UnsplashResult): ImageInfo {
     const image = new ImageInfo();
-    let node;
+    let node:UnsplashData;
     if (data && data.results && data.results.length) {
       node = data.results[0];
-    } else if (data) {
-      node = data;
     } else {
       return image;
     }
@@ -176,7 +179,7 @@ export class ImageFetcher {
 
     return image;
   }
-  private static resolveBingData(data: any): ImageInfo {
+  private static resolveBingData(data: BingDailyImageResult): ImageInfo {
     const image = new ImageInfo();
     if (data && data.images && data.images.length > 0) {
       const node = data.images[0];
@@ -203,10 +206,13 @@ export class ImageFetcher {
         .then((res) => res.json())
         .then((data) => {
           if (data.results) {
-            resolve(data.results.map((item: any) => item.artworkUrl60));
+            resolve(data.results.map((item: AppleSearchData) => item.artworkUrl60));
           } else {
             resolve([]);
           }
+        })
+        .catch(e => {
+          reject(e);
         });
     });
   }
@@ -246,20 +252,20 @@ export class QueryDB {
   private static dbEnabled = false;
   private static dbName = "safari_homepage";
   private static dbVersion = 2;
-  private static db: any;
+  private static db: IDBDatabase | undefined;
   public static initialize() {
     try {
       const request = window.indexedDB.open(QueryDB.dbName, QueryDB.dbVersion);
 
       request.onupgradeneeded = (e: IDBVersionChangeEvent) => {
         QueryDB.db = (<IDBRequest>e.target)?.result;
-        const objectStore = QueryDB.db.createObjectStore("queries", {
+        const objectStore = QueryDB.db?.createObjectStore("queries", {
           keyPath: "query",
         });
-        objectStore.createIndex("visit", "visit", {
+        objectStore?.createIndex("visit", "visit", {
           unique: false,
         });
-        objectStore.add({
+        objectStore?.add({
           query: "test",
           visit: 1,
         });
@@ -278,18 +284,21 @@ export class QueryDB {
       if (!QueryDB.dbEnabled) {
         return resolve(false);
       }
-      const store = QueryDB.db.transaction("queries", "readwrite").objectStore("queries");
-      const request = store.get(query);
+      const store = QueryDB.db?.transaction("queries", "readwrite").objectStore("queries");
+      const request = store?.get(query);
+      if (!request) {
+        return reject();
+      }
       request.onsuccess = () => {
         let visit = 1;
-        if (request.result) {
+        if (request?.result) {
           visit = request.result.visit + 1;
-          store.put({
+          store?.put({
             query,
             visit,
           });
         } else {
-          store.add({
+          store?.add({
             query,
             visit,
           });
@@ -306,9 +315,12 @@ export class QueryDB {
       if (!QueryDB.dbEnabled) {
         return resolve(<IDBCursorWithValue>{});
       }
-      const request = QueryDB.db.transaction("queries")
+      const request = QueryDB.db?.transaction("queries")
         .objectStore("queries")
         .openCursor(window.IDBKeyRange.bound(query, query + "\uffff"), "prev");
+      if (!request) {
+        return reject();
+      }
       request.onsuccess = (e: Event) => {
         resolve((<IDBRequest>e.target)?.result);
       };

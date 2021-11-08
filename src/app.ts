@@ -3,25 +3,25 @@ import { ImageSource, ImageSize, SearchEngine } from './app.class';
 import { DOM, ImageFetcher, Storage, QueryDB, Util } from './common';
 import { DefaultConfig } from './config';
 
-HTMLElement.prototype.addClass = function(className: string) {
+HTMLElement.prototype.addClass = function (className: string) {
   if (!this.classList.contains(className)) {
     this.classList.add(className);
   }
 };
 
-HTMLElement.prototype.removeClass = function(className: string) {
+HTMLElement.prototype.removeClass = function (className: string) {
   if (this.classList.contains(className)) {
     this.classList.remove(className);
   }
 };
-HTMLElement.prototype.toggleClass = function(className: string) {
+HTMLElement.prototype.toggleClass = function (className: string) {
   if (!this.classList.contains(className)) {
     this.classList.add(className);
   } else {
     this.classList.remove(className);
   }
 };
-HTMLElement.prototype.val = function(value?: string) {
+HTMLElement.prototype.val = function (value?: string) {
   if (value === '') {
     (<HTMLInputElement>this).value = '';
   } else if (value) {
@@ -441,7 +441,7 @@ export class App {
    * @returns {Promise<void>}
    */
   private waitDocumentReady(): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<boolean>((resolve) => {
       if (document.readyState === 'complete' || document.readyState === 'interactive') {
         resolve(true);
       } else {
