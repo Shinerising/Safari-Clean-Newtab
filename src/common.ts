@@ -1,5 +1,5 @@
 import { ImageSource, ImageSize, ImageInfo } from './app.class';
-import { UnsplashData, UnsplashResult, BingDailyImageResult, AppleSearchData } from './app.interface';
+import { UnsplashData, UnsplashResult, BingDailyImageResult, KonachanImageResult, AppleSearchData } from './app.interface';
 
 type debounceFunction = (...args: string[]) => void;
 export class Util {
@@ -77,8 +77,6 @@ export class DOM {
  * Fetch image resources from web
  */
 export class ImageFetcher {
-  private static unsplashID
-    = '691b20a234f612603711b9eabd89df4729a06478f16d7e89cd8526340897b18d';
 
   public static async fetch(source: ImageSource, size: ImageSize, keyword: string) {
     const data = await this.requestImage(source, keyword);
@@ -130,22 +128,18 @@ export class ImageFetcher {
   }
 
   private static async requestImage(source: ImageSource, keyword: string) {
-    if (source == ImageSource.unsplash) {
-      let url = `https://api.unsplash.com/photos/random?client_id=${this.unsplashID}&orientation=landscape`;
-      if (keyword) {
-        url += '&query=' + keyword;
+    const url = 'https://production.safari-image.aw-api-request.workers.dev';
+    return await fetch(url, {
+      mode: 'cors',
+      method: 'POST',
+      body: JSON.stringify({
+        keyword: keyword,
+        source: ImageSource[source],
+      }),
+      headers: {
+        'Content-Type': 'application/json'
       }
-      return await fetch(url, { mode: 'cors' }).then((res) => res.json());
-    } else if (source == ImageSource.bing) {
-      const url =
-        `https://www.bing.com/HPImageArchive.aspx?format=js&idx=${Math.floor(Math.random() * 7)}&n=1`;
-      return await fetch(url, {
-        mode: 'cors',
-        headers: {
-          'X-Requested-With': '',
-        },
-      }).then((res) => res.json());
-    }
+    }).then((res) => res.json());
   }
 
   private static resolveData(source: ImageSource, data: unknown): ImageInfo {
@@ -153,6 +147,10 @@ export class ImageFetcher {
       return this.resolveUnsplashData(data as UnsplashResult);
     } else if (source == ImageSource.bing) {
       return this.resolveBingData(data as BingDailyImageResult);
+    } else if (source == ImageSource.konachan) {
+      return this.resolveKonachanData(data as KonachanImageResult);
+    } else if (source == ImageSource.yandere) {
+      return this.resolveKonachanData(data as KonachanImageResult);
     }
     return new ImageInfo();
   }
@@ -196,6 +194,20 @@ export class ImageFetcher {
         image.location = info[2];
         image.author = info[3];
       }
+    }
+    return image;
+  }
+  private static resolveKonachanData(data: KonachanImageResult): ImageInfo {
+    const image = new ImageInfo();
+    if (data && data.length > 0) {
+      const node = data[Math.random() * data.length | 0];
+
+      image.raw = node.file_url;
+      image.full = node.jpeg_url;
+      image.regular = node.preview_url;
+      image.small = node.sample_url;
+      image.url = node.source;
+      image.author = node.author;
     }
     return image;
   }

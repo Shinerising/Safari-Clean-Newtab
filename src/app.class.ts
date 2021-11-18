@@ -15,7 +15,8 @@ export class Config {
 export enum ImageSource {
   unsplash,
   bing,
-  local
+  konachan,
+  yandere
 }
 
 export enum SearchEngine {
