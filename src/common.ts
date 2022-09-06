@@ -128,7 +128,7 @@ export class ImageFetcher {
   }
 
   private static async requestImage(source: ImageSource, keyword: string) {
-    const url = 'https://production.safari-image.aw-api-request.workers.dev';
+    const url = '/api';
     return await fetch(url, {
       mode: 'cors',
       method: 'POST',
