@@ -303,12 +303,16 @@ export class App {
           const width = entry.contentRect.width / entry.contentRect.height * 200;
           const mask = `url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 ${width} 200" xmlns="http://www.w3.org/2000/svg"><path d="M 100 0 c -90 0 -100 10 -100 100 c 0 90 10 100 100 100 l ${width - 200} 0 c 90 0, 100 -10, 100 -100 c 0 -90, -10 -100, -100 -100Z" fill="white"></path></svg>')`;
           DOM.bottomGlass.style.mask = mask;
+          DOM.bottomGlass.style.setProperty('mask-size', '100% 100%');
           DOM.bottomGlass.style.webkitMaskImage = mask;
+          DOM.bottomGlass.style.webkitMaskSize = '100% 100%';
         } else if (entry.target == DOM.searchBar) {
           const width = entry.contentRect.width / entry.contentRect.height * 200;
           const mask = `url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 ${width} 200" xmlns="http://www.w3.org/2000/svg"><path d="M 100 0 l -30 0 c -45 0 -70 25 -70 70 l 0 60 c 0 45 25 70 70 70 l 30 0 l ${width - 200} 0 l 30 0 c 45 0, 70 -25, 70 -70 l 0 -60 c 0 -45, -25 -70, -70 -70Z" fill="white"></path></svg>')`;
           DOM.searchGlass.style.mask = mask;
+          DOM.searchGlass.style.setProperty('mask-size', '100% 100%');
           DOM.searchGlass.style.webkitMaskImage = mask;
+          DOM.searchGlass.style.webkitMaskSize = '100% 100%';
         }
       }
     })
